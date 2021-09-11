@@ -1,5 +1,5 @@
-# Miau
-======
+Miau
+====
 [![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/miau)
 
 Miau (MIcro AUthorization) is a simple authorization library for Rails
@@ -30,12 +30,12 @@ end
 ~~~
 
 ~~~ ruby
-# app/controllers/posts_controller.rb
-  class PostsController < ApplicationController
-    ...
-    def update
-      ...
-      authorize!
+# app/controllers/posts_controller.rb            # app/viewa/posts/update.rb
+  class PostsController < ApplicationController    <% if authorized? %>
+    ...                                              ...
+    def update                                     <% else %>
+      ...                                            ...
+      authorize!                                   <% end %>
       ...
     end
     ...
@@ -43,34 +43,14 @@ end
 ~~~
 
 ~~~ ruby
-# app/viewa/posts/update.rb
-  <% if authorized? %>
-    ...
-  <% else %>
-    ...
-  <% end %>
-~~~
-
-~~~ ruby
-# app/policies/application_policy.rb
-  class ApplicationPolicy
-  attr_reader :user, :post
-
-    ...
-    def update
-      false
-    end
-    ...
-  end
-~~~
-
-~~~ ruby
-# app/policies/posts_policy.rb
-  class PostsPolicy < ApplicationPolicy
-    ...
-    def update
-      user.admin? && resource.published?
-    end
+# app/policies/application_policy.rb             # app/policies/posts_policy.rb
+  class ApplicationPolicy                          class PostsPolicy < ApplicationPolicy
+  attr_reader :user, :post                           ...
+                                                     def update
+    ...                                                user.admin? && resource.published?
+    def update                                       end
+      false                                          ...
+    end                                            end
     ...
   end
 ~~~
@@ -108,7 +88,7 @@ set the "policy" to "PostsPolicy".
 
 The default value for "action" is set by "params[:action]".
 
-"resource" may by set as a parameter.
+"resource" may be set as a parameter.
 
 A full blown sample :
 
@@ -144,6 +124,12 @@ class ApplicationController
 ...
 end
 ~~~
+
+Policies remain as before.
+Rescue's may be inserted previously in the chain.
+
+"verify_authorized" checks that an "authorize!" has been called.
+
 
 PORO
 ----
