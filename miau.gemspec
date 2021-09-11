@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/matique/miau"
   s.license = "MIT"
 
+  s.metadata["source_code_uri"] = "https://github.com/matique/miau"
+
   s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
