@@ -20,9 +20,9 @@ module Miau
   end
 
   def authorized?(resource = nil, hsh = {})
-    klass = hsh[:policy_class]
+    klass = hsh[:class]
     klass ||= params[:controller].camelize
-    action = hsh[:policy_action]
+    action = hsh[:action]
     action ||= params[:action]
     PolicyStorage.instance.run(klass, action, miau_user, resource)
   end

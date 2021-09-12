@@ -20,7 +20,8 @@ describe Miau do
 
     def test_NotDefinedError
       posts_controller.params[:controller] = "articles"
-      assert_raises(Miau::NotDefinedError) {
+      # assert_raises(Miau::NotDefinedError) {
+      assert_raises(NameError) {
         posts_controller.authorize!(post)
       }
     end

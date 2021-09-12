@@ -30,7 +30,6 @@ class PolicyStorage
 
   def create_policy(klass, user, resource)
     str = "#{klass}Policy"
-    raise Miau::NotDefinedError unless Object.const_defined?(str)
     result = str.constantize.new(user, resource)
     @policies[klass] = result
   end

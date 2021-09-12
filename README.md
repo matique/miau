@@ -30,7 +30,7 @@ end
 ~~~
 
 ~~~ ruby
-# app/controllers/posts_controller.rb            # app/viewa/posts/update.rb
+# app/controllers/posts_controller.rb            # app/views/posts/update.rb
   class PostsController < ApplicationController    <% if authorized? %>
     ...                                              ...
     def update                                     <% else %>
@@ -45,12 +45,16 @@ end
 ~~~ ruby
 # app/policies/application_policy.rb             # app/policies/posts_policy.rb
   class ApplicationPolicy                          class PostsPolicy < ApplicationPolicy
-  attr_reader :user, :post                           ...
+    attr_reader :user, :resource                     ...
                                                      def update
-    ...                                                user.admin? && resource.published?
-    def update                                       end
-      false                                          ...
+    def initalize(user, resource)                      user.admin? && resource.published?
+      @user = user                                   end
+      @resource = resource                           ...
     end                                            end
+    ...
+    def update
+      false
+    end
     ...
   end
 ~~~
@@ -106,11 +110,11 @@ class ApplicationController
   include Miau
 ...
 
+  after_action { verify_authorized }
+
   def miau_user
     current_user
   end
-
-  verify_authorized
 
   rescue Miau::NotDefinedError
     # do some logging or whatever
@@ -126,7 +130,7 @@ end
 ~~~
 
 Policies remain as before.
-Rescue's may be inserted previously in the chain.
+Rescue's may be inserted previously in the exception chain.
 
 "verify_authorized" checks that an "authorize!" has been called.
 
