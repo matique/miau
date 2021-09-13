@@ -24,7 +24,7 @@ module Miau
     klass ||= params[:controller].camelize
     action = hsh[:action]
     action ||= params[:action]
-    PolicyStorage.instance.run(klass, action, miau_user, resource)
+    Miau::PolicyStorage.instance.run(klass, action, miau_user, resource)
   end
 
   def miau_user

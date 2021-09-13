@@ -120,10 +120,10 @@ class ApplicationController
     # do some logging or whatever
 
   rescue Miau::NotAuthorizedError
- #  # do some logging or whatever
+    # do some logging or whatever
 
   rescue Miau::AuthorizationNotPerformedError
-   # do some logging or whatever
+    # do some logging or whatever
 
 ...
 end
