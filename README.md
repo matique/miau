@@ -62,7 +62,7 @@ end
 "authorize!" will raise an exception (which can be handled by "rescue")
 in case a policy returns "false" or isn't available.
 
-"authorize?" will return the value of the policy.
+"authorized?" will return the value of the policy.
 
 
 Internals
@@ -73,7 +73,7 @@ a corresponding policy method is called.
 
 The policy method has access to the "user" and the "resource".
 
-"user" is set by the default method "miau_user" as:
+"user" is set by the default method "miau_user" (can be overwritten) as:
 
 ~~~
 # app/models/application_controller.rb
@@ -84,10 +84,8 @@ The policy method has access to the "user" and the "resource".
   ...
 ~~~
 
-and the method may be overwritten.
-
-The default value for "policy" is inferred from the controller,
-i.e. "authorization!" called from "PostsController" will
+The default value for "policy" is inferred from "params[:controller]".
+i.e. "authorize!" called from "PostsController" will
 set the "policy" to "PostsPolicy".
 
 The default value for "action" is set by "params[:action]".
