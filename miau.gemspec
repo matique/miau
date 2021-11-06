@@ -1,26 +1,26 @@
-lib = File.expand_path("../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "miau/version"
+require_relative "lib/miau/version"
 
 Gem::Specification.new do |s|
   s.name = "miau"
   s.version = Miau::VERSION
-  s.authors = ["Dittmar Krall"]
-  s.email = ["dittmar.krall@matique.com"]
-
+  s.platform = Gem::Platform::RUBY
   s.summary = %(Simple and lightweight authorization solution for Rails.)
-  s.description = <<~EOS
-    Miau provides a set of helpers which restricts what
-    resources a given user is allowed to access.
-  EOS
-  s.homepage = "https://github.com/matique/miau"
   s.license = "MIT"
 
-  s.metadata["source_code_uri"] = "https://github.com/matique/miau"
+  s.description = <<~EOS
+    Miau (MIcro AUthorization) provides a set of helpers which restricts what
+    resources a given user is allowed to access.
+  EOS
 
-  s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
+  s.metadata["source_code_uri"] = "https://github.com/matique/miau"
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.authors = ["Dittmar Krall"]
+  s.email = "dittmar.krall@matique.com"
+  s.homepage = "https://github.com/matique/miau"
+
+  s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
 
   s.add_runtime_dependency "activesupport"
 

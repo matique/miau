@@ -1,9 +1,6 @@
 require "test_helper"
 
 describe Miau::Error do
-  let(:user) { 123 }
-  let(:post) { Post.new(user, 1) }
-
   def test_presence_of_errors
     assert_raises(Miau::Error) {
       raise Miau::Error
