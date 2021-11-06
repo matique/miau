@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.license = "MIT"
 
   s.description = <<~EOS
-    Miau (MIcro AUthorization) provides a set of helpers which restricts what
+    MIAU (MIcro AUthorization) provides a set of helpers which restricts what
     resources a given user is allowed to access.
   EOS
 
