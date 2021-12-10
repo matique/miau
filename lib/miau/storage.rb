@@ -14,8 +14,10 @@ module Miau
 
     def run(klass, action, user, resource)
       policy = policy(klass, user, resource)
-      raise Miau::NotDefinedError unless policy.respond_to?(action)
-      policy.send(action)
+      return policy.send(action) if policy.respond_to?(action)
+
+      msg = "class <#{klass} action <#{action}>"
+      raise Miau::NotDefinedError, msg
     end
 
     private
