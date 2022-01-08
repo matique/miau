@@ -10,8 +10,8 @@ ENV["RAILS_ENV"] ||= "test"
 
 require "miau"
 
-require "rack"
-require "rack/test"
+#require "rack"
+#require "rack/test"
 require "active_support"
 require "active_support/core_ext"
 
@@ -21,5 +21,3 @@ require "ricecream"
 support = File.expand_path("../test/support", __dir__)
 $LOAD_PATH.unshift support
 Dir["#{support}/**/*.rb"].each { |f| require f }
-
-# Minitest::Test.i_suck_and_my_tests_are_order_dependent!
