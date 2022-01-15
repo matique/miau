@@ -1,4 +1,6 @@
-require "miau/storage"
+# frozen_string_literal: true
+
+#require "miau/storage"
 
 class ApplicationPolicy
   attr_accessor :user, :resource
