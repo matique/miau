@@ -10,8 +10,6 @@ ENV["RAILS_ENV"] ||= "test"
 
 require "miau"
 
-#require "rack"
-#require "rack/test"
 require "active_support"
 require "active_support/core_ext"
 
