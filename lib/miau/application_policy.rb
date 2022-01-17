@@ -9,4 +9,12 @@ class ApplicationPolicy
     @user = user
     @resource = resource
   end
+
+  def self.miau(actions, meth = nil, &block)
+ic actions, meth, block
+    [actions].flatten.each { |action|
+#      Miau::PolicyStorage.instance.add(:nil, action, meth)
+      Miau::PolicyStorage.instance.add(self, action, meth)
+    }
+  end
 end

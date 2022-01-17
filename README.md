@@ -84,7 +84,7 @@ The policy method has access to the "user" and the "resource".
   ...
 ~~~
 
-The default value for "policy" is inferred from "params[:controller]".
+The default value for "policy" is inferred from "params[:controller]",
 i.e. "authorize!" called from "PostsController" will
 set the "policy" to "PostsPolicy".
 

@@ -8,4 +8,12 @@ describe Miau, "storage" do
     result = storage.run :Posts, :update, user, nil
     assert result
   end
+
+  def test_x
+    storage.reset
+    storage.run :Posts, :update, user, nil
+    str = storage.to_yaml
+#ic str
+puts str
+  end
 end

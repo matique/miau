@@ -9,10 +9,22 @@ module Miau
     attr_reader :policies
 
     def initialize
+      reset
+    end
+
+    def reset
       @policies = {}
     end
 
+def add(klass, action, meth)
+ic klass, action, meth
+  @policies[klass] ||= {}
+  @policies[klass][action] = meth
+#  @policies[klass] << [action, meth]
+end
+
     def run(klass, action, user, resource)
+ic 11, klass, user, resource
       policy = policy(klass, user, resource)
       return policy.send(action) if policy.respond_to?(action)
 
@@ -20,9 +32,14 @@ module Miau
       raise Miau::NotDefinedError, msg
     end
 
+    def to_yaml
+      "# === @policies ===\n" + YAML.dump(@policies)
+    end
+
     private
 
     def policy(klass, user, resource)
+ic klass, user, resource
       result = @policies[klass]
       if result
         result.user = user
