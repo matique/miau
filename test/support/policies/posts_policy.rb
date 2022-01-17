@@ -1,6 +1,5 @@
 class PostsPolicy < ApplicationPolicy
-  miau %i[foopost], :update
-  miau(%i[foopost2]) { user.admin? }
+  miau %i[index], :update
 
   def update
     # user.admin? && resource.name == "Hugo"

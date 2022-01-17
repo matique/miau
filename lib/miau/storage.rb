@@ -6,6 +6,18 @@ module Miau
   class PolicyStorage
     include Singleton
 
+    # Example:
+    # {
+    #   "posts" => {
+    #     "index" => [posts_policy, "index"],
+    #     "show" => [posts_policy, "show"].
+    #     "delete" => [application_policy, "delete"]
+    #     "remove" => [application_policy, "delete"]
+    #   },
+    #   "application" => {
+    #     "admin" => [application_policy, "admin"]
+    #   }
+    # }
     attr_reader :policies
 
     def initialize

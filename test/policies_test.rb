@@ -2,16 +2,15 @@ require "test_helper"
 require "miau/application_policy"
 
 class ApplicationPolicy
-  miau %i[action buh bar], :foo
+  miau %i[show edit], :bar
 
-  def foo
-ic "foo"
+  def bar
+ic "bar"
 ic user, resource
     true
   end
 end
 
-#describe ApplicationPolicy, "without Controller" do
 describe ApplicationPolicy do
   let(:user) { "User" }
   let(:post) { Post.new(user, 1) }
@@ -19,13 +18,10 @@ describe ApplicationPolicy do
   let(:posts_controller) { PostsController.new(user, params) }
   let(:storage) { Miau::PolicyStorage.instance }
 
-  describe "#authorize!" do
-#authorize! article, policy: :Comments, action: :extract
-    def test_x
-      str = storage.to_yaml
+  def test_x
+    str = storage.to_yaml
 #ic str
 puts str
-      posts_controller.authorize!(post, policy: nil, action: :action)
-    end
+    posts_controller.authorize!(post, policy: nil, action: :action)
   end
 end
