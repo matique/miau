@@ -21,6 +21,17 @@ describe ApplicationPolicy do
   def test_x
 str = storage.to_yaml
 puts str
-    posts_controller.authorize!(post, policy: nil, action: :action)
+p 11111111111111
+    posts_controller.authorize!
+  end
+
+  def test_y
+p 22222222222222
+    posts_controller.authorize!(post, action: :show)
+  end
+
+  def test_z
+p 3333333333333
+    posts_controller.authorize!(post, action: :edit)
   end
 end

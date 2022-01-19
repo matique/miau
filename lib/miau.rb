@@ -51,10 +51,9 @@ module Miau
 
   def klass_action(hsh)
     klass = hsh[:class]
-    klass ||= params[:controller].camelize
+    klass ||= params[:controller]
     action = hsh[:action]
     action ||= params[:action]
-
     [klass, action]
   end
 end

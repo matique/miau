@@ -4,8 +4,10 @@ class PostsPolicy < ApplicationPolicy
   miau %i[index show], :bar
 
   def update
+ic "update"
     # user.admin? && resource.name == "Hugo"
     true
+#    false
   end
 
   def bar
