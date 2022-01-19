@@ -2,9 +2,9 @@ require "test_helper"
 require "miau/application_policy"
 
 class ApplicationPolicy
-  miau %i[show edit], :bar
+  miau %i[show edit], :bar2
 
-  def bar
+  def bar2
 ic "bar"
 ic user, resource
     true
@@ -19,8 +19,7 @@ describe ApplicationPolicy do
   let(:storage) { Miau::PolicyStorage.instance }
 
   def test_x
-    str = storage.to_yaml
-#ic str
+str = storage.to_yaml
 puts str
     posts_controller.authorize!(post, policy: nil, action: :action)
   end

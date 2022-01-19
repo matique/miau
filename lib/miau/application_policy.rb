@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-#require "miau/storage"
-
 class ApplicationPolicy
   attr_accessor :user, :resource
 
@@ -11,12 +9,8 @@ class ApplicationPolicy
   end
 
   def self.miau(actions, meth = nil, &block)
-ic actions, meth, block
-ic self
-ic self.name.underscore
-ic self.name
+#ic actions, meth, block
     [actions].flatten.each { |action|
-#      Miau::PolicyStorage.instance.add(:nil, action, meth)
       Miau::PolicyStorage.instance.add(self, action, meth)
     }
   end

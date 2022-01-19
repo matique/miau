@@ -6,19 +6,20 @@ module Miau
   class PolicyStorage
     include Singleton
 
-    # Example:
+    # Example @policies:
     # {
-    #   "posts" => {
-    #     "index" => [posts_policy, "index"],
-    #     "show" => [posts_policy, "show"].
-    #     "delete" => [application_policy, "delete"]
-    #     "remove" => [application_policy, "delete"]
+    #   posts: {
+    #     index: :index,
+    #     show: :show,
+    #     delete: :delete,
+    #     remove: :delete"
     #   },
-    #   "application" => {
-    #     "admin" => [application_policy, "admin"]
+    #   application: {
+    #     admin: :admin
     #   }
     # }
     attr_reader :policies
+    attr_reader :instances # { posts: PostsPolicy.new }
 
     def initialize
       reset
@@ -26,17 +27,20 @@ module Miau
 
     def reset
       @policies = {}
+      @instances = {}
     end
 
-def add(klass, action, meth)
-ic klass, action, meth
-  @policies[klass] ||= {}
-  @policies[klass][action] = meth
-#  @policies[klass] << [action, meth]
-end
+    def add(klass, action, meth)
+#ic klass, action, meth
+      kls = klass.name.underscore[0 .. -8] # remove "_policy"
+      kls = kls.to_sym
+      @policies[kls] ||= {}
+      @instances[kls] = klass.new(nil, nil) unless @instances[kls]
+      @policies[kls][action.to_sym] = meth.to_sym
+    end
 
     def run(klass, action, user, resource)
-ic 11, klass, user, resource
+#ic 11, klass, user, resource
       policy = policy(klass, user, resource)
       return policy.send(action) if policy.respond_to?(action)
 
@@ -45,13 +49,14 @@ ic 11, klass, user, resource
     end
 
     def to_yaml
-      "# === @policies ===\n" + YAML.dump(@policies)
+      "# === @policies ===\n" + YAML.dump(@policies) +
+      "# === @instances ===\n" + YAML.dump(@instances)
     end
 
     private
 
     def policy(klass, user, resource)
-ic klass, user, resource
+#ic klass, user, resource
       result = @policies[klass]
       if result
         result.user = user
