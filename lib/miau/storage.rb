@@ -58,8 +58,12 @@ p 11
 x = @policies[klass][action]
 ic x
 p 22
-      return policy.send(x) if policy.respond_to?(x)
+      return policy.send(x) if x && policy.respond_to?(x)
 
+i = @instances[:application]
+ic i
+p = @policies[:application]
+ic p
       msg = "class <#{klass} action <#{action}>"
       raise Miau::NotDefinedError, msg
     end
@@ -67,6 +71,13 @@ p 22
     def to_yaml
       "# === @policies ===\n" + YAML.dump(@policies) +
       "# === @instances ===\n" + YAML.dump(@instances)
+    end
+
+    private
+
+    def undefined(klass, action)
+      msg = "class <#{klass} action <#{action}>"
+      raise Miau::NotDefinedError, msg
     end
   end
 end

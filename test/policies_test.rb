@@ -5,7 +5,7 @@ class ApplicationPolicy
   miau %i[show edit], :bar2
 
   def bar2
-ic "bar"
+ic "bar2"
 ic user, resource
     true
   end
@@ -18,14 +18,14 @@ describe ApplicationPolicy do
   let(:posts_controller) { PostsController.new(user, params) }
   let(:storage) { Miau::PolicyStorage.instance }
 
-  def test_x
+  def xtest_x
 str = storage.to_yaml
 puts str
 p 11111111111111
     posts_controller.authorize!
   end
 
-  def test_y
+  def xtest_y
 p 22222222222222
     posts_controller.authorize!(post, action: :show)
   end
