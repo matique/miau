@@ -18,7 +18,7 @@ describe ApplicationPolicy do
   let(:posts_controller) { PostsController.new(user, params) }
   let(:storage) { Miau::PolicyStorage.instance }
 
-  def xtest_x
+  def test_x
 str = storage.to_yaml
 puts str
 p 11111111111111
