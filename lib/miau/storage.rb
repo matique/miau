@@ -50,13 +50,15 @@ module Miau
     #   - nil
 
     # returns responding policy: [instance, method]
+    # find_policy?
     def responder(klass, action)
-ic "responder", klass, action
+# ic "responder", klass, action
       kls = instance_of(klass)
       act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
 
-      kls = instance_of(:application)
+      klass = :application
+      kls = instance_of(klass)
       act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
 
