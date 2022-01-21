@@ -49,50 +49,19 @@ module Miau
     #   - method of ApplicationPolicy specified by "miau action, method"
     #   - nil
 
-    # returns responding police [instance, method]
+    # returns responding policy: [instance, method]
     def responder(klass, action)
 ic "responder", klass, action
       kls = instance_of(klass)
-      act = yy(klass, action)
-ic 112, kls, act
+      act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
-ic 113
 
       kls = instance_of(:application)
-      act = yy(klass, action)
-ic 114, kls, act
+      act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
-ic 115
-return nil
+
+      return nil
     end
-
-def zz(klass, action)
-ic "zz", klass, action
-  kls = instance_of(klass)
-  act = yy(klass, action)
-  ic 112, kls, act
-  return [kls, act] if kls.respond_to?(act)
-
-end
-
-def instance_of(klass)
-ic 22, klass
-  res = @instances[klass]
-  return res if res
-
-  name = "#{klass.to_s.camelcase}Policy"
-  return nil unless Object.const_defined?(name)
-
-  @instances[klass] = name.constantize.new
-end
-
-def yy(klass, action)
-ic 33, klass, action
-  act = @policies[klass]
-  return action unless act
-
-  act[action] || action
-end
 
     def run(klass, action, user, resource)
 ic "RUN"
@@ -129,30 +98,28 @@ ic p
 
     private
 
+    def instance_of(klass)
+ic 22, klass
+      res = @instances[klass]
+      return res if res
+
+      name = "#{klass.to_s.camelcase}Policy"
+      return nil unless Object.const_defined?(name)
+
+      @instances[klass] = name.constantize.new
+    end
+
+    def policy_method(klass, action)
+    ic 33, klass, action
+      act = @policies[klass]
+      return action unless act
+
+      act[action] || action
+    end
+
     def undefined(klass, action)
       msg = "class <#{klass} action <#{action}>"
       raise Miau::NotDefinedError, msg
     end
   end
 end
-
-
-=begin
-      kls = "#{klass.to_s.camelcase}Policy"
-ic kls
-      policy = @instances[klass] ||= kls.constantize.new
-      return policy if policy.respond_to?(action)
-
-p 11
-act = @policies[klass][action]
-      return policy if policy.respond_to?(act)
-p 22
-klass = :application
-      policy = @instances[:application]
-      return policy if policy.respond_to?(action)
-
-act = @policies[:application][action]
-      return policy if policy.respond_to?(act)
-
-      return nil
-=end
