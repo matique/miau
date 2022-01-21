@@ -27,29 +27,28 @@ puts str
     str = storage.to_yaml
   end
 
-  def xtest_responder_posts_policy
-    assert_instance_of(PostsPolicy, storage.responder(:posts, :update))
+  def test_responder_posts_policy
+ic storage.responder(:posts, :update)
+#    assert_instance_of(PostsPolicy, storage.responder(:posts, :update))
   end
 
-  def xtest_responder_posts_policy2
-    assert_instance_of(PostsPolicy, storage.responder(:posts, :show))
+  def test_responder_posts_policy2
+ic storage.responder(:posts, :show)
+#    assert_instance_of(PostsPolicy, storage.responder(:posts, :show))
   end
 
-  def xtest_responder_application
-    assert_instance_of(ApplicationPolicy, storage.responder(:application, :bar2))
+  def test_responder_application
+ic storage.responder(:application, :bar2)
+#    assert_instance_of(ApplicationPolicy, storage.responder(:application, :bar2))
   end
 
   def test_responder_application2
-p 7777777777777777777
 ic storage.responder(:application, :edit)
-p 77777777777777777771
 ic storage.responder(:hugo, :edit)
-p 77777777777777777772
 #    assert_instance_of(ApplicationPolicy, storage.responder(:application, :edit))
   end
 
   def xtest_responder_application3
-p 888888888888888888
 ic storage.responder(:posts, :edit)
     assert_instance_of(ApplicationPolicy, storage.responder(:posts, :edit))
   end

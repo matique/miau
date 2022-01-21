@@ -99,7 +99,6 @@ ic p
     private
 
     def instance_of(klass)
-ic 22, klass
       res = @instances[klass]
       return res if res
 
@@ -110,7 +109,6 @@ ic 22, klass
     end
 
     def policy_method(klass, action)
-    ic 33, klass, action
       act = @policies[klass]
       return action unless act
 
