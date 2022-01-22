@@ -63,8 +63,8 @@ module Miau
     end
 
     def run(klass, action, user, resource)
-ic "RUN"
-ic 11, klass, action, user, resource
+#ic "RUN"
+#ic 11, klass, action, user, resource
       arr = find_policy(klass, action)
       unless arr
         msg = "class <#{klass}> action <#{action}>"
@@ -72,13 +72,9 @@ ic 11, klass, action, user, resource
       end
 
       policy, meth = arr
-ic policy, meth
       policy.user = user
       policy.resource = resource
-res =
       policy.send(action)
-ic res
-res
     end
 
     def to_yaml

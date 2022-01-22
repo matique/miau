@@ -9,14 +9,13 @@ class PostsPolicy < ApplicationPolicy
   end
 
   def update
-ic "update"
+#ic "update"
     # user.admin? && resource.name == "Hugo"
     true
-#    false
   end
 
   def bar
-ic "bar"
+#ic "bar"
     true
   end
 
