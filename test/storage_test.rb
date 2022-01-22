@@ -48,9 +48,9 @@ describe Miau, "storage" do
     check_nil(:unknown, :unknown)
   end
 
-  def xtest_coverage_to_yaml
+  def test_coverage_to_yaml
     str = storage.to_yaml
-    puts str
+    # puts str
 
     assert str
   end

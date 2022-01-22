@@ -95,10 +95,5 @@ module Miau
 
       act[action] || action
     end
-
-    def undefined(klass, action)
-      msg = "class <#{klass} action <#{action}>"
-      raise Miau::NotDefinedError, msg
-    end
   end
 end
