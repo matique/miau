@@ -64,30 +64,21 @@ module Miau
 
     def run(klass, action, user, resource)
 ic "RUN"
-#ic 11, klass, action, user, resource
-      klass = klass.to_sym
-      action = action.to_sym
-ic @instances[klass]
-      p = @instances[klass] ||= "#{klass.camelcase}Policy".constantize.new
-      policy = p
-ic policy
+ic 11, klass, action, user, resource
+      arr = find_policy(klass, action)
+      unless arr
+        msg = "class <#{klass}> action <#{action}>"
+        raise Miau::NotDefinedError, msg
+      end
+
+      policy, meth = arr
+ic policy, meth
       policy.user = user
       policy.resource = resource
-ic policy
-p 11
-      return policy.send(action) if policy.respond_to?(action)
-
-x = @policies[klass][action]
-ic x
-p 22
-      return policy.send(x) if x && policy.respond_to?(x)
-
-i = @instances[:application]
-ic i
-p = @policies[:application]
-ic p
-      msg = "class <#{klass} action <#{action}>"
-      raise Miau::NotDefinedError, msg
+res =
+      policy.send(action)
+ic res
+res
     end
 
     def to_yaml
