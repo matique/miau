@@ -4,7 +4,7 @@ require "benchmark/ips"
 
 describe "Internal timings" do
   let(:user) { "User" }
-  let(:params) { {action: "update", controller: "posts"} }
+  let(:params) { {action: "posts1", controller: "posts"} }
   let(:posts_controller) { PostsController.new(user, params) }
 
   # run_flag = true
