@@ -25,13 +25,17 @@ describe Miau, "storage" do
 #  end
 
   def test_find_policy
-ic storage.responder(:posts, :posts1)
-ic storage.responder(:posts, :posts2)
-ic storage.responder(:posts, :appli1)
-ic storage.responder(:posts, :appli2)
-ic storage.responder(:unknown, :appli1)
-ic storage.responder(:unknown, :appli2)
+    check_find(PostsPolicy, :posts1, :posts, :posts1)
+    check_find(PostsPolicy, :posts1, :posts, :posts2)
+    check_find(PostsPolicy, :appli1, :posts, :appli1)
+    check_find(ApplicationPolicy, :appli1, :posts, :appli2)
+    check_find(ApplicationPolicy, :appli1, :unknown, :appli1)
+    check_find(ApplicationPolicy, :appli1, :unknown, :appli21)
+
+    check_nil(:posts, :unknown)
+    check_nil(:unknown, :unknown)
   end
+
 
   def test_x
 #    storage.reset
@@ -42,31 +46,16 @@ puts str
 #    str = storage.to_yaml
   end
 
-=begin
-  def test_responder_posts_policy
-ic storage.responder(:posts, :update)
-#    assert_instance_of(PostsPolicy, storage.responder(:posts, :update))
+  private
+
+  def check_find(expected_kind, expected_method, contr, action)
+    inst, meth = storage.find_policy(contr, action)
+    assert_kind_of(expected_kind, inst)
+    assert_equal expected_method, meth
   end
 
-  def test_responder_posts_policy2
-ic storage.responder(:posts, :show)
-#    assert_instance_of(PostsPolicy, storage.responder(:posts, :show))
+  def check_nil(contr, action)
+    res = storage.find_policy(contr, action)
+    assert_nil res
   end
-
-  def test_responder_application
-ic storage.responder(:application, :bar2)
-#    assert_instance_of(ApplicationPolicy, storage.responder(:application, :bar2))
-  end
-
-  def test_responder_application2
-ic storage.responder(:application, :edit)
-ic storage.responder(:hugo, :edit)
-#    assert_instance_of(ApplicationPolicy, storage.responder(:application, :edit))
-  end
-
-  def xtest_responder_application3
-ic storage.responder(:posts, :edit)
-    assert_instance_of(ApplicationPolicy, storage.responder(:posts, :edit))
-  end
-=end
 end

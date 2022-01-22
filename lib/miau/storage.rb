@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "singleton"
-require 'active_support/inflector'
+#require 'active_support/inflector'
 
 module Miau
   class PolicyStorage
@@ -10,8 +10,6 @@ module Miau
     # Example @policies:
     # {
     #   posts: {
-    #     index: :index,
-    #     show: :show,
     #     delete: :delete,
     #     remove: :delete
     #   },
@@ -49,10 +47,9 @@ module Miau
     #   - method of ApplicationPolicy specified by "miau action, method"
     #   - nil
 
-    # returns responding policy: [instance, method]
-    # find_policy?
-    def responder(klass, action)
-# ic "responder", klass, action
+    # returns policy: [instance, method]
+    def find_policy(klass, action)
+# ic "find_policy", klass, action
       kls = instance_of(klass)
       act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
