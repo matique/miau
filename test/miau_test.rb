@@ -3,7 +3,7 @@ require "test_helper"
 describe Miau do
   let(:user) { "User" }
   let(:post) { Post.new(user, 1) }
-  let(:params) { {action: "update", controller: "posts"} }
+  let(:params) { {action: "posts1", controller: "posts"} }
   let(:posts_controller) { PostsController.new(user, params) }
 
   describe "#authorize!" do
@@ -20,14 +20,13 @@ describe Miau do
 
     def test_NotDefinedError
       posts_controller.params[:controller] = "articles"
-      # assert_raises(Miau::NotDefinedError) {
-      assert_raises(NameError) {
+      assert_raises(Miau::NotDefinedError) {
         posts_controller.authorize!(post)
       }
     end
 
     def test_NoMethodError
-      posts_controller.params[:action] = "update_all"
+      posts_controller.params[:action] = "unknown"
       assert_raises(Miau::NotDefinedError) {
         posts_controller.authorize!(post)
       }

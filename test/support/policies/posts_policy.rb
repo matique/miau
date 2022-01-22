@@ -8,17 +8,6 @@ class PostsPolicy < ApplicationPolicy
     true
   end
 
-  def update
-#ic "update"
-    # user.admin? && resource.name == "Hugo"
-    true
-  end
-
-  def bar
-#ic "bar"
-    true
-  end
-
   def destroy
     false
   end

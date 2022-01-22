@@ -3,7 +3,8 @@ require "test_helper"
 describe Miau, "performed authorization" do
   let(:user) { "User" }
   let(:post) { Post.new(user, 1) }
-  let(:params) { {action: "update", controller: "posts"} }
+#  let(:params) { {action: "update", controller: "posts"} }
+  let(:params) { {action: "posts1", controller: "posts"} }
   let(:posts_controller) { PostsController.new(user, params) }
 
   def test_does_nothing_when_authorized

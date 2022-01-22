@@ -2,23 +2,16 @@ require "test_helper"
 
 class ApplicationPolicy
   miau %i[appli2], :appli1
-  miau %i[show edit], :bar2
 
   def appli1
     true
   end
 
-def fail
-  false
-end
+  def fail
+    false
+  end
 
-def ok
-  true
-end
-
-  def bar2
-ic "bar2"
-ic user, resource
+  def ok
     true
   end
 end
@@ -27,7 +20,7 @@ describe Miau, "storage" do
   let(:storage) { Miau::PolicyStorage.instance }
   let(:user) { "User" }
 
-  def xtest_run_unknown
+  def test_run_unknown
     assert_raises(Miau::NotDefinedError) {
       storage.run :posts, :unknown, user, nil
     }
@@ -43,7 +36,7 @@ describe Miau, "storage" do
     refute result
   end
 
-  def xtest_find_policy
+  def test_find_policy
     check_find(PostsPolicy, :posts1, :posts, :posts1)
     check_find(PostsPolicy, :posts1, :posts, :posts2)
     check_find(PostsPolicy, :appli1, :posts, :appli1)
