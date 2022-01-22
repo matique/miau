@@ -29,7 +29,7 @@ module Miau
     end
 
     def add(klass, action, meth)
-      kls = klass.name.underscore[0 .. -8] # remove "_policy"
+      kls = klass.name.underscore[0..-8] # remove "_policy"
       kls = kls.to_sym
       @policies[kls] ||= {}
       @instances[kls] ||= klass.new
@@ -56,7 +56,7 @@ module Miau
       act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
 
-      return nil
+      # return nil
     end
 
     def run(klass, action, user, resource)
@@ -69,12 +69,12 @@ module Miau
       policy, meth = arr
       policy.user = user
       policy.resource = resource
-      policy.send(action)
+      policy.send(meth)
     end
 
     def to_yaml
       "# === @policies ===\n" + YAML.dump(@policies) +
-      "# === @instances ===\n" + YAML.dump(@instances)
+        "# === @instances ===\n" + YAML.dump(@instances)
     end
 
     private

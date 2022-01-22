@@ -4,7 +4,6 @@ require "active_support/concern"
 require "miau/version"
 require "miau/error"
 require "miau/storage"
-require "miau/storage"
 require "miau/application_policy"
 
 module Miau
