@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "singleton"
-#require 'active_support/inflector'
 
 module Miau
   class PolicyStorage
@@ -30,7 +29,6 @@ module Miau
     end
 
     def add(klass, action, meth)
-#ic klass, action, meth
       kls = klass.name.underscore[0 .. -8] # remove "_policy"
       kls = kls.to_sym
       @policies[kls] ||= {}
@@ -49,7 +47,6 @@ module Miau
 
     # returns policy: [instance, method]
     def find_policy(klass, action)
-# ic "find_policy", klass, action
       kls = instance_of(klass)
       act = policy_method(klass, action)
       return [kls, act] if kls.respond_to?(act)
@@ -63,8 +60,6 @@ module Miau
     end
 
     def run(klass, action, user, resource)
-#ic "RUN"
-#ic 11, klass, action, user, resource
       arr = find_policy(klass, action)
       unless arr
         msg = "class <#{klass}> action <#{action}>"
