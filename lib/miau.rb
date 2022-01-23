@@ -4,6 +4,7 @@ require "active_support/concern"
 require "miau/version"
 require "miau/error"
 require "miau/storage"
+require "miau/application_policy"
 
 module Miau
   extend ActiveSupport::Concern
@@ -49,10 +50,9 @@ module Miau
 
   def klass_action(hsh)
     klass = hsh[:class]
-    klass ||= params[:controller].camelize
+    klass ||= params[:controller]
     action = hsh[:action]
     action ||= params[:action]
-
     [klass, action]
   end
 end

@@ -6,37 +6,94 @@ module Miau
   class PolicyStorage
     include Singleton
 
+    # Example @policies:
+    # {
+    #   posts: {
+    #     delete: :delete,
+    #     remove: :delete
+    #   },
+    #   application: {
+    #     admin: :check
+    #   }
+    # }
     attr_reader :policies
+    attr_reader :instances # { posts: PostsPolicy.new }
 
     def initialize
+      reset
+    end
+
+    def reset
       @policies = {}
+      @instances = {}
+    end
+
+    def add(klass, action, meth)
+      kls = klass.name.underscore[0..-8] # remove "_policy"
+      kls = kls.to_sym
+      @policies[kls] ||= {}
+      @instances[kls] ||= klass.new
+      @policies[kls][action.to_sym] = meth.to_sym
+    end
+
+    # return instance of policy (may be nil) and the method
+    # klass and action are symbols
+    # Priority:
+    #   - method of <klass>Policy
+    #   - method of <klass>Policy specified by "miau action, method"
+    #   - method of ApplicationPolicy (independent of klass)
+    #   - method of ApplicationPolicy specified by "miau action, method"
+    #   - nil
+
+    # returns policy: [instance, method]
+    def find_policy(klass, action)
+      kls = instance_of(klass)
+      act = policy_method(klass, action)
+      return [kls, act] if kls.respond_to?(act)
+
+      klass = :application
+      kls = instance_of(klass)
+      act = policy_method(klass, action)
+      return [kls, act] if kls.respond_to?(act)
+
+      # return nil
     end
 
     def run(klass, action, user, resource)
-      policy = policy(klass, user, resource)
-      return policy.send(action) if policy.respond_to?(action)
+      arr = find_policy(klass, action)
+      unless arr
+        msg = "class <#{klass}> action <#{action}>"
+        raise Miau::NotDefinedError, msg
+      end
 
-      msg = "class <#{klass} action <#{action}>"
-      raise Miau::NotDefinedError, msg
+      policy, meth = arr
+      policy.user = user
+      policy.resource = resource
+      policy.send(meth)
+    end
+
+    def to_yaml
+      "# === @policies ===\n" + YAML.dump(@policies) +
+        "# === @instances ===\n" + YAML.dump(@instances)
     end
 
     private
 
-    def policy(klass, user, resource)
-      result = @policies[klass]
-      if result
-        result.user = user
-        result.resource = resource
-        return result
-      end
+    def instance_of(klass)
+      res = @instances[klass]
+      return res if res
 
-      create_policy(klass, user, resource)
+      name = "#{klass.to_s.camelcase}Policy"
+      return nil unless Object.const_defined?(name)
+
+      @instances[klass] = name.constantize.new
     end
 
-    def create_policy(klass, user, resource)
-      str = "#{klass}Policy"
-      result = str.constantize.new(user, resource)
-      @policies[klass] = result
+    def policy_method(klass, action)
+      act = @policies[klass]
+      return action unless act
+
+      act[action] || action
     end
   end
 end

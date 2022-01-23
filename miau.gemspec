@@ -18,17 +18,12 @@ Gem::Specification.new do |s|
 
   s.authors = ["Dittmar Krall"]
   s.email = "dittmar.krall@matique.com"
-  s.homepage = "https://github.com/matique/miau"
+  s.homepage = "https://matique.com"
 
   s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
 
   s.add_runtime_dependency "activesupport"
-
-  s.add_development_dependency "activemodel"
-  s.add_development_dependency "actionpack"
-  s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
 
-  s.add_development_dependency "minitest"
   s.add_development_dependency "ricecream"
 end

@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class PostsPolicy < ApplicationPolicy
-  def update
-    # user.admin? && resource.name == "Hugo"
+  miau %i[posts2 posts3], :posts1
+  miau %i[index show], :bar
+
+  def posts1
     true
   end
 
