@@ -2,7 +2,7 @@ Miau
 ====
 [![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/miau)
 
-Miau (MIcro AUthorization) is a simple authorization library for Rails
+Miau (MIcro AUthorization) is a simple authorization gem for Rails
 inspired by Pundit and Banken.
 Miau provides a set of helpers which restricts what resources
 a given user is allowed to access.
@@ -14,7 +14,6 @@ Installation
 # Gemfile
 gem "miau"
 ~~~
-
 and run "bundle install".
 
 Usage (as intended)
@@ -51,11 +50,6 @@ end
       @user = user                                   end
       @resource = resource                           ...
     end                                            end
-    ...
-    def update
-      false
-    end
-    ...
   end
 ~~~
 
@@ -64,6 +58,7 @@ in case a policy returns "false" or isn't available.
 
 "authorized?" will return the value of the policy.
 
+"app/policies/application_policy.rb" is included in the gem.
 
 Internals
 ---------
@@ -95,7 +90,7 @@ The default value for "action" is set by "params[:action]".
 A full blown sample :
 
 ~~~
-  authorize! article, policy: :Comments, action: :extract
+  authorize! article, policy: :posts, action: :show
 ~~~
 
 Usage (more elaborated)
@@ -132,10 +127,30 @@ Rescue's may be inserted previously in the exception chain.
 
 "verify_authorized" checks that an "authorize!" has been called.
 
+DRYing
+------
+
+~~~ ruby
+# app/policies/posts_policy.rb          -->      # app/policies/posts_policy.rb
+  class PostsPolicy < ApplicationPolicy            class PostsPolicy < ApplicationPolicy
+    def new                                          miau %i[create edit], :new
+      user.admin? && Time.now.monday?
+    end                                              def new
+                                                       user.admin? && Time.now.monday?
+    def create                                       end
+      user.admin? && Time.now.monday?                ...
+    end                                            end
+
+    def edit
+      user.admin? && Time.now.monday?
+    end
+    ...
+  end
+~~~
 
 PORO
 ----
-Miau is a very small library, it just provides a few helpers.
+Miau is a small gem, it just provides a few helpers.
 All of the policy classes are just plain Ruby classes,
 allowing DRY, encapsulation, aliasing and inheritance.
 
