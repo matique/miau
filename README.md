@@ -158,7 +158,7 @@ Just the embedding in Rails required some specific knowledge.
 
 ## Miscellaneous
 
-Copyright (c) 2021-2022 Dittmar Krall (www.matiq.com),
+Copyright (c) 2021-2023 Dittmar Krall (www.matiq.com),
 released under the MIT license:
 
 * https://opensource.org/licenses/MIT
