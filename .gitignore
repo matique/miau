@@ -1,5 +1,7 @@
 /.bundle/
 /Gemfile.lock
 /coverage/
+.watchr
+
 /doc/
 /tmp/
