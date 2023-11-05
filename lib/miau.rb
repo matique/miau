@@ -53,6 +53,6 @@ module Miau
     klass ||= params[:controller]
     action = hsh[:action]
     action ||= params[:action]
-    [klass, action]
+    [klass.to_sym, action.to_sym]
   end
 end

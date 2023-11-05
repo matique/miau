@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.authors = ["Dittmar Krall"]
   s.email = "dittmar.krall@matiq.com"
-  s.homepage = "https://matiq.com"
+  s.homepage = "https://github.com/matique/miau"
 
   s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
 

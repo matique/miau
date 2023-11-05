@@ -28,7 +28,7 @@ end
 ```
 
 ```ruby
-# app/controllers/posts_controller.rb            # app/views/posts/update.rb
+# app/controllers/posts_controller.rb            # app/views/posts/update.erb
   class PostsController < ApplicationController    <% if authorized? %>
     ...                                              ...
     def update                                     <% else %>
