@@ -54,9 +54,7 @@ module Miau
       klass = :application
       kls = instance_of(klass)
       act = policy_method(klass, action)
-      return [kls, act] if kls.respond_to?(act)
-
-      # return nil
+      [kls, act] if kls.respond_to?(act)
     end
 
     def run(klass, action, user, resource)

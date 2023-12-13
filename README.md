@@ -1,6 +1,7 @@
 Miau
 ====
 [![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/miau)
+[![GEM Downloads](https://img.shields.io/gem/dt/miau?color=168AFE&logo=ruby&logoColor=FE1616)](https://rubygems.org/gems/miau)
 
 Miau (MIcro AUthorization) is a simple authorization gem for Rails
 inspired by Pundit and Banken.
@@ -159,6 +160,4 @@ Just the embedding in Rails required some specific knowledge.
 ## Miscellaneous
 
 Copyright (c) 2021-2023 Dittmar Krall (www.matiq.com),
-released under the MIT license:
-
-* https://opensource.org/licenses/MIT
+released under the [MIT license](https://opensource.org/licenses/MIT).

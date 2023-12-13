@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
     resources a given user is allowed to access.
   EOS
 
-  s.metadata["source_code_uri"] = "https://github.com/matique/miau"
   s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
@@ -25,5 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activesupport"
   s.add_development_dependency "rake"
 
+  s.add_development_dependency "appraisal"
+  s.add_development_dependency "minitest"
   s.add_development_dependency "ricecream"
 end
