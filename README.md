@@ -1,5 +1,5 @@
-Miau
-====
+# Miau
+
 [![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/miau)
 [![GEM Downloads](https://img.shields.io/gem/dt/miau?color=168AFE&logo=ruby&logoColor=FE1616)](https://rubygems.org/gems/miau)
 
@@ -60,8 +60,7 @@ in case a policy returns "false" or isn't available.
 
 "app/policies/application_policy.rb" is included in the gem.
 
-Internals
----------
+## Internals
 
 At the bottom line based on a "policy" and an "action"
 a corresponding policy method is called.
@@ -93,8 +92,7 @@ A full blown sample :
   authorize! article, policy: :posts, action: :show
 ```
 
-Usage (more elaborated)
------------------------
+## Usage (more elaborated)
 
 ```ruby
 # app/models/application_controller.rb
@@ -127,8 +125,7 @@ Rescue's may be inserted previously in the exception chain.
 
 "verify_authorized" checks that an "authorize!" has been called.
 
-DRYing
-------
+## DRYing
 
 ```ruby
 # app/policies/posts_policy.rb          -->      # app/policies/posts_policy.rb
@@ -148,8 +145,8 @@ DRYing
   end
 ```
 
-PORO
-----
+## PORO
+
 Miau is a small gem, it just provides a few helpers.
 All of the policy classes are just plain Ruby classes,
 allowing DRY, encapsulation, aliasing and inheritance.
