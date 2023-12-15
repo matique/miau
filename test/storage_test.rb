@@ -1,4 +1,5 @@
 require "test_helper"
+require "yaml"
 
 class ApplicationPolicy
   miau %i[appli2], :appli1

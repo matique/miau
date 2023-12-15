@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "singleton"
+require "yaml"
 
 module Miau
   class PolicyStorage
@@ -33,7 +34,12 @@ module Miau
       kls = kls.to_sym
       @policies[kls] ||= {}
       @instances[kls] ||= klass.new
-      @policies[kls][action.to_sym] = meth.to_sym
+      if meth.is_a?(Array)
+        meths = [meth].flatten.collect { |m| m.to_sym }
+        @policies[kls][action.to_sym] = meths
+      else
+        @policies[kls][action.to_sym] = meth.to_sym
+      end
     end
 
     # return instance of policy (may be nil) and the method
@@ -67,7 +73,11 @@ module Miau
       policy, meth = arr
       policy.user = user
       policy.resource = resource
-      policy.send(meth)
+      [meth].flatten.each { |m|
+        return false unless policy.send(m)
+      }
+      true
+      # policy.send(meth)
     end
 
     def to_yaml
