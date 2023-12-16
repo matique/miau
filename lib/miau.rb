@@ -4,6 +4,7 @@ require "active_support/concern"
 require "miau/version"
 require "miau/error"
 require "miau/storage"
+require "miau/run"
 require "miau/application_policy"
 
 module Miau
@@ -27,7 +28,7 @@ module Miau
 
   def authorized?(resource = nil, hsh = {})
     klass, action = klass_action(hsh)
-    Miau::PolicyStorage.instance.run(klass, action, miau_user, resource)
+    Miau::PolicyRun.instance.run(klass, action, miau_user, resource)
   end
 
   def miau_user

@@ -51,57 +51,56 @@ module Miau
     #   - method of ApplicationPolicy specified by "miau action, method"
     #   - nil
 
-    # returns policy: [instance, method]
-    def find_policy(klass, action)
-      kls = instance_of(klass)
-      act = policy_method(klass, action)
-      return [kls, act] if kls.respond_to?(act)
-
-      klass = :application
-      kls = instance_of(klass)
-      act = policy_method(klass, action)
-      [kls, act] if kls.respond_to?(act)
-    end
-
-    def run(klass, action, user, resource)
-      arr = find_policy(klass, action)
-      unless arr
-        msg = "class <#{klass}> action <#{action}>"
-        raise Miau::NotDefinedError, msg
-      end
-
-      policy, meth = arr
-      policy.user = user
-      policy.resource = resource
-      [meth].flatten.each { |m|
-        return false unless policy.send(m)
-      }
-      true
-      # policy.send(meth)
-    end
+#    # returns policy: [instance, method]
+#    def find_policy(klass, action)
+#      kls = instance_of(klass)
+#      act = policy_method(klass, action)
+#      return [kls, act] if kls.respond_to?(act)
+#
+#      klass = :application
+#      kls = instance_of(klass)
+#      act = policy_method(klass, action)
+#      [kls, act] if kls.respond_to?(act)
+#    end
+#
+#    def run(klass, action, user, resource)
+#      arr = find_policy(klass, action)
+#      unless arr
+#        msg = "class <#{klass}> action <#{action}>"
+#        raise Miau::NotDefinedError, msg
+#      end
+#
+#      policy, meth = arr
+#      policy.user = user
+#      policy.resource = resource
+#      [meth].flatten.each { |m|
+#        return false unless policy.send(m)
+#      }
+#      true
+#    end
 
     def to_yaml
       "# === @policies ===\n" + YAML.dump(@policies) +
         "# === @instances ===\n" + YAML.dump(@instances)
     end
 
-    private
-
-    def instance_of(klass)
-      res = @instances[klass]
-      return res if res
-
-      name = "#{klass.to_s.camelcase}Policy"
-      return nil unless Object.const_defined?(name)
-
-      @instances[klass] = name.constantize.new
-    end
-
-    def policy_method(klass, action)
-      act = @policies[klass]
-      return action unless act
-
-      act[action] || action
-    end
+#    private
+#
+#    def instance_of(klass)
+#      res = @instances[klass]
+#      return res if res
+#
+#      name = "#{klass.to_s.camelcase}Policy"
+#      return nil unless Object.const_defined?(name)
+#
+#      @instances[klass] = name.constantize.new
+#    end
+#
+#    def policy_method(klass, action)
+#      act = @policies[klass]
+#      return action unless act
+#
+#      act[action] || action
+#    end
   end
 end
