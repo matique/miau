@@ -42,15 +42,6 @@ module Miau
       end
     end
 
-    # return instance of policy (may be nil) and the method
-    # klass and action are symbols
-    # Priority:
-    #   - method of <klass>Policy
-    #   - method of <klass>Policy specified by "miau action, method"
-    #   - method of ApplicationPolicy (independent of klass)
-    #   - method of ApplicationPolicy specified by "miau action, method"
-    #   - nil
-
     def to_yaml
       "# === @policies ===\n" + YAML.dump(@policies) +
         "# === @instances ===\n" + YAML.dump(@instances)

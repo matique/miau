@@ -36,7 +36,6 @@ describe Miau, "storage" do
     storage.add ApplicationPolicy, "fail", %i[fail ok]
 
     str = storage.to_yaml
-puts str
     assert_match(/:application/, str)
     assert_match(/- :fail/, str)
     assert_match(/- :ok/, str)
