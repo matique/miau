@@ -29,17 +29,30 @@ module Miau
       @instances = {}
     end
 
-    def add(klass, action, meth)
-      kls = klass.name.underscore[0..-8] # remove "_policy"
+    def add_policy(kls, action, meth)
       kls = kls.to_sym
+      action = action.to_sym
       @policies[kls] ||= {}
-      @instances[kls] ||= klass.new
+      if @policies[kls][action]
+        raise OverwriteError, "Can't overwrite policy(#{kls}, #{action})"
+      end
+
       if meth.is_a?(Array)
         meths = [meth].flatten.collect { |m| m.to_sym }
-        @policies[kls][action.to_sym] = meths
+        @policies[kls][action] = meths
       else
-        @policies[kls][action.to_sym] = meth.to_sym
+        @policies[kls][action] = meth.to_sym
       end
+    end
+
+    def find_or_create(klass)
+      res = @instances[klass]
+      return res unless res == nil
+
+      name = "#{klass.to_s.camelcase}Policy"
+      return nil unless Object.const_defined?(name)
+
+      instances[klass] = name.constantize.new
     end
 
     def to_yaml

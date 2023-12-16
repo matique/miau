@@ -20,25 +20,31 @@ end
 
 describe Miau, "storage" do
   let(:storage) { Miau::PolicyStorage.instance }
-  let(:user) { "User" }
 
-  def test_add
+  def test_add_policy_method
     storage.reset
-    storage.add ApplicationPolicy, "fail", "ok"
+    storage.add_policy "application", "fail", "ok"
 
     str = storage.to_yaml
     assert_match(/:application/, str)
     assert_match(/:fail: :ok/, str)
   end
 
-  def test_add2
+  def test_add_policy_methods
     storage.reset
-    storage.add ApplicationPolicy, "fail", %i[fail ok]
+    storage.add_policy "application", "fail", %i[fail ok]
 
     str = storage.to_yaml
     assert_match(/:application/, str)
     assert_match(/- :fail/, str)
     assert_match(/- :ok/, str)
+  end
+
+  def test_find_or_create
+    storage.reset
+    storage.find_or_create "application"
+
+    assert ApplicationPolicy, storage.instances[:application]
   end
 
   def test_coverage_to_yaml
