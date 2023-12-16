@@ -21,13 +21,13 @@ module Miau
     @_miau_authorization_performed = true
     return true if authorized?(resource, hsh)
 
-    klass, action = klass_action(hsh)
+    klass, action = klass_action
     msg = "class <#{klass} action <#{action}>"
     raise Miau::NotAuthorizedError, msg
   end
 
   def authorized?(resource = nil, hsh = {})
-    klass, action = klass_action(hsh)
+    klass, action = klass_action
     Miau::PolicyRun.instance.run(klass, action, miau_user, resource)
   end
 
@@ -53,11 +53,7 @@ end
 
   private
 
-  def klass_action(hsh)
-    klass = hsh[:class]
-    klass ||= params[:controller]
-    action = hsh[:action]
-    action ||= params[:action]
-    [klass.to_sym, action.to_sym]
+  def klass_action
+    [params[:controller].to_sym, params[:action].to_sym]
   end
 end
