@@ -63,7 +63,6 @@ describe Miau, "run" do
     msg += " #{expected_kind} #{expected_method}"
     msg += " #{contr} #{action}"
 
-#    inst, meth = storage.find_policy(contr, action)
     inst, meth = miau_run.find_policy(contr, action)
     assert_kind_of(expected_kind, inst, msg)
     assert_equal(expected_method, meth, msg)
