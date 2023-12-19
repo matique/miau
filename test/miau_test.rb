@@ -3,7 +3,7 @@ require "test_helper"
 describe Miau do
   let(:user) { "User" }
   let(:post) { Post.new(user, 1) }
-  let(:params) { {action: "posts1", controller: "posts"} }
+  let(:params) { {action: "si", controller: "posts"} }
   let(:posts_controller) { PostsController.new(user, params) }
 
   describe "#authorize!" do
@@ -12,7 +12,7 @@ describe Miau do
     end
 
     def test_return_false
-      posts_controller.params[:action] = "destroy"
+      posts_controller.params[:action] = "no"
       assert_raises(Miau::NotAuthorizedError) {
         posts_controller.authorize!(post)
       }
@@ -39,7 +39,7 @@ describe Miau do
     end
 
     def test_return_false
-      posts_controller.params[:action] = "destroy"
+      posts_controller.params[:action] = "no"
       refute posts_controller.authorized?(post)
     end
   end
