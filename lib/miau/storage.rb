@@ -30,12 +30,10 @@ module Miau
     end
 
     def add_policy(kls, action, meth)
-#ic kls, action, meth
       kls = kls.to_sym
       action = action.to_sym
       @policies[kls] ||= {}
       if @policies[kls][action]
-#puts to_yaml
         raise OverwriteError, "Can't overwrite policy(#{kls}, #{action})"
       end
 
@@ -49,7 +47,7 @@ module Miau
 
     def find_or_create(klass)
       res = @instances[klass]
-      return res unless res == nil
+      return res unless res.nil?
 
       name = "#{klass.to_s.camelcase}Policy"
       return nil unless Object.const_defined?(name)

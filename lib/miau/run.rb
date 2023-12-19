@@ -19,28 +19,28 @@ module Miau
 
     def find_policy(kls, action)
       name = "#{kls.to_s.camelcase}Policy"
-    if Object.const_defined?(name)
-      klass = name.constantize.new
-      return [klass.class, action] if klass.respond_to?(action)
+      if Object.const_defined?(name)
+        klass = name.constantize.new
+        return [klass.class, action] if klass.respond_to?(action)
 
-      hsh = Miau::PolicyStorage.instance.policies[kls]
-      if hsh
-        meth = hsh[action]
-        return [klass.class, meth] if meth
+        hsh = Miau::PolicyStorage.instance.policies[kls]
+        if hsh
+          meth = hsh[action]
+          return [klass.class, meth] if meth
+        end
+        hsh = Miau::PolicyStorage.instance.policies[:application]
+        if hsh
+          meth = hsh[action]
+          return [ApplicationPolicy, meth] if meth
+        end
       end
-      hsh = Miau::PolicyStorage.instance.policies[:application]
-      if hsh
-        meth = hsh[action]
-        return [ApplicationPolicy, meth] if meth
-      end
-    end
 
-    return [nil, nil]
+      [nil, nil]
     end
 
     def run(klass, action, user, resource)
       policy = Miau::PolicyStorage.instance.find_or_create(klass)
-      kls, meth = find_policy(klass, action)
+      _kls, meth = find_policy(klass, action)
       unless meth
         msg = "class <#{klass}> action <#{action}>"
         raise Miau::NotDefinedError, msg

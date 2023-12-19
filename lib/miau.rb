@@ -47,9 +47,9 @@ module Miau
     !!@_miau_authorization_performed
   end
 
-def check_authorization
-ic 8888888888888888, self
-end
+  def check_authorization
+    ic 8888888888888888, self
+  end
 
   private
 

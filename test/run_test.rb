@@ -43,8 +43,8 @@ describe Miau, "run" do
     check_find(PostsPolicy, :si, :posts, :asi)
     check_find(PostsPolicy, :appli1, :posts, :appli1)
     check_find(ApplicationPolicy, :appli1, :posts, :appli2)
-#    check_find(:application, :appli1, :unknown, :appli1)
-#    check_find(:application, :appli1, :unknown, :appli2)
+    # check_find(:application, :appli1, :unknown, :appli1)
+    # check_find(:application, :appli1, :unknown, :appli2)
 
     check_nil(:posts, :unknown)
     check_nil(:unknown, :unknown)
@@ -60,7 +60,6 @@ describe Miau, "run" do
   private
 
   def check_find(expected_klass, expected_method, contr, action)
-#ic 777, expected_klass, expected_method, contr, action
     msg = "check_find:"
     msg += " #{expected_klass} #{expected_method}"
     msg += " #{contr} #{action}"
