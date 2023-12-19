@@ -48,7 +48,7 @@ module Miau
   end
 
 def check_authorization
-#ic 8888888888888888, self
+ic 8888888888888888, self
 end
 
   private
