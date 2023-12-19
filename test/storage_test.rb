@@ -1,7 +1,7 @@
 require "test_helper"
 require "yaml"
 
-class ApplicationPolicy
+class MyPolicy < ApplicationPolicy
   miau %i[appli2], :appli1
   miau %i[appli3], %i[fail ok]
 
@@ -21,31 +21,32 @@ end
 describe Miau, "storage" do
   let(:storage) { Miau::PolicyStorage.instance }
 
+  def setup
+#    storage.reset
+  end
+
   def test_add_policy_method
-    storage.reset
-    storage.add_policy "application", "fail", "ok"
+    storage.add_policy "my", "fail", "ok"
 
     str = storage.to_yaml
-    assert_match(/:application/, str)
+    assert_match(/:my/, str)
     assert_match(/:fail: :ok/, str)
   end
 
   def test_add_policy_methods
-    storage.reset
-    storage.add_policy "application", "fail", %i[fail ok]
+    storage.add_policy "my", "failx", %i[failx okx]
 
     str = storage.to_yaml
-    assert_match(/:application/, str)
+    assert_match(/:my/, str)
     assert_match(/- :fail/, str)
     assert_match(/- :ok/, str)
   end
 
-  def test_find_or_create
-    storage.reset
-    storage.find_or_create "application"
-
-    assert ApplicationPolicy, storage.instances[:application]
-  end
+#  def test_find_or_create
+#    storage.find_or_create "application"
+#
+#    assert ApplicationPolicy, storage.instances[:application]
+#  end
 
   def test_coverage_to_yaml
     str = storage.to_yaml

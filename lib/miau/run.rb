@@ -15,51 +15,56 @@ module Miau
     #   - method of ApplicationPolicy (independent of klass)
     #   - method of ApplicationPolicy specified by "miau action, method"
     #   - nil
-    # returns policy: [instance, method]
-    def find_policy(klass, action)
-      kls = instance_of(klass)
-      act = policy_method(klass, action)
-      return [kls, act] if kls.respond_to?(act)
-
-      klass = :application
-      kls = instance_of(klass)
-      act = policy_method(klass, action)
-      [kls, act] if kls.respond_to?(act)
+    # returns [klass, method]
+    def find_policy(kls, action)
+      name = "#{kls.to_s.camelcase}Policy"
+ic 990, name
+    if Object.const_defined?(name)
+ic 991
+      klass = name.constantize.new
+ic 9911, klass
+      return [klass.class, action] if klass.respond_to?(action)
+p 992
+      hsh = Miau::PolicyStorage.instance.policies[kls]
+      if hsh
+        meth = hsh[action]
+        return [klass.class, meth] if meth
+      end
+      hsh = Miau::PolicyStorage.instance.policies[:application]
+      if hsh
+        meth = hsh[action]
+#        return [ApplicationPolicy.class, meth] if meth
+        return [ApplicationPolicy, meth] if meth
+      end
+ic 993
+#raise
+    end
+    return nil
+raise
+#klass = name.constantize.new
+#klass = name.constantize
+#ic 993, klass
+#return [klass, action]
+#      act = Miau::PolicyStorage.instance.policies[klass]
+#      return action unless act
+#
+#      act[action] || action
     end
 
     def run(klass, action, user, resource)
-      arr = find_policy(klass, action)
-      unless arr
+      policy = Miau::PolicyStorage.instance.find_or_create(klass)
+      meth = find_policy(klass, action)
+      unless meth
         msg = "class <#{klass}> action <#{action}>"
         raise Miau::NotDefinedError, msg
       end
 
-      policy, meth = arr
       policy.user = user
       policy.resource = resource
       [meth].flatten.each { |m|
         return false unless policy.send(m)
       }
       true
-    end
-
-    private
-
-    def instance_of(klass)
-      res = Miau::PolicyStorage.instance.instances[klass]
-      return res if res
-
-      name = "#{klass.to_s.camelcase}Policy"
-      return nil unless Object.const_defined?(name)
-
-      Miau::PolicyStorage.instance.instances[klass] = name.constantize.new
-    end
-
-    def policy_method(klass, action)
-      act = Miau::PolicyStorage.instance.policies[klass]
-      return action unless act
-
-      act[action] || action
     end
   end
 end

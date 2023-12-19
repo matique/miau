@@ -30,10 +30,12 @@ module Miau
     end
 
     def add_policy(kls, action, meth)
+#ic kls, action, meth
       kls = kls.to_sym
       action = action.to_sym
       @policies[kls] ||= {}
       if @policies[kls][action]
+#puts to_yaml
         raise OverwriteError, "Can't overwrite policy(#{kls}, #{action})"
       end
 
