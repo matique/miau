@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class PostsPolicy < ApplicationPolicy
-  miau %i[posts2 posts3], :posts1
-  miau %i[index show], :bar
+  miau %i[asi bsi], :si
+  miau %i[sino], %i[si no]
 
-  def posts1
+  def si
     true
   end
 
-  def destroy
+  def no
     false
   end
 end

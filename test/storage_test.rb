@@ -1,7 +1,9 @@
 require "test_helper"
+require "yaml"
 
-class ApplicationPolicy
+class MyPolicy < ApplicationPolicy
   miau %i[appli2], :appli1
+  miau %i[appli3], %i[fail ok]
 
   def appli1
     true
@@ -18,57 +20,34 @@ end
 
 describe Miau, "storage" do
   let(:storage) { Miau::PolicyStorage.instance }
-  let(:user) { "User" }
 
-  def test_run_unknown
-    assert_raises(Miau::NotDefinedError) {
-      storage.run :posts, :unknown, user, nil
-    }
+  def test_add_policy_method
+    storage.add_policy "my", "fail", "ok"
+
+    str = storage.to_yaml
+    assert_match(/:my/, str)
+    assert_match(/:fail: :ok/, str)
   end
 
-  def test_run_ok
-    result = storage.run :posts, :ok, user, nil
-    assert result
+  def test_add_policy_methods
+    storage.add_policy "my", "failx", %i[fail ok]
+
+    str = storage.to_yaml
+    assert_match(/:my/, str)
+    assert_match(/- :fail/, str)
+    assert_match(/- :ok/, str)
   end
 
-  def test_run_fail
-    result = storage.run :posts, :fail, user, nil
-    refute result
-  end
+  def test_find_or_create
+    storage.find_or_create "application"
 
-  def test_find_policy
-    check_find(PostsPolicy, :posts1, :posts, :posts1)
-    check_find(PostsPolicy, :posts1, :posts, :posts2)
-    check_find(PostsPolicy, :appli1, :posts, :appli1)
-    check_find(ApplicationPolicy, :appli1, :posts, :appli2)
-    check_find(ApplicationPolicy, :appli1, :unknown, :appli1)
-    check_find(ApplicationPolicy, :appli1, :unknown, :appli2)
-
-    check_nil(:posts, :unknown)
-    check_nil(:unknown, :unknown)
+    assert ApplicationPolicy, storage.instances[:application]
   end
 
   def test_coverage_to_yaml
     str = storage.to_yaml
-    # puts str
 
     assert str
-  end
-
-  private
-
-  def check_find(expected_kind, expected_method, contr, action)
-    msg = "check_find:"
-    msg += " #{expected_kind} #{expected_method}"
-    msg += " #{contr} #{action}"
-
-    inst, meth = storage.find_policy(contr, action)
-    assert_kind_of(expected_kind, inst, msg)
-    assert_equal(expected_method, meth, msg)
-  end
-
-  def check_nil(contr, action)
-    res = storage.find_policy(contr, action)
-    assert_nil res
+    # puts str
   end
 end

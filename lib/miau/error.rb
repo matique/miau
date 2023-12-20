@@ -11,4 +11,7 @@ module Miau
 
   class AuthorizationNotPerformedError < Error
   end
+
+  class OverwriteError < Error
+  end
 end
