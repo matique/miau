@@ -30,7 +30,7 @@ describe Miau, "storage" do
   end
 
   def test_add_policy_methods
-    storage.add_policy "my", "failx", %i[failx okx]
+    storage.add_policy "my", "failx", %i[fail ok]
 
     str = storage.to_yaml
     assert_match(/:my/, str)
