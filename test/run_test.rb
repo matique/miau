@@ -64,13 +64,12 @@ describe Miau, "run" do
     msg += " #{expected_klass} #{expected_method}"
     msg += " #{contr} #{action}"
 
-    klass, meth = miau_run.find_policy(contr, action)
-    assert_equal(expected_klass, klass, msg)
+    meth = miau_run.find_policy(contr, action)
     assert_equal(expected_method, meth, msg)
   end
 
   def check_nil(contr, action)
-    kls, meth = miau_run.find_policy(contr, action)
-    assert_equal([nil, nil], [kls, meth])
+    meth = miau_run.find_policy(contr, action)
+    assert_nil meth
   end
 end

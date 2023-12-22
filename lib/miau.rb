@@ -47,8 +47,14 @@ module Miau
     !!@_miau_authorization_performed
   end
 
-  def check_authorization
+  def authorize_controller!
     ic 8888888888888888, self
+  end
+
+  def authorize_controller?
+    ic 99999999999, self
+true
+#false
   end
 
   private

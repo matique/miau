@@ -21,26 +21,26 @@ module Miau
       name = "#{kls.to_s.camelcase}Policy"
       if Object.const_defined?(name)
         klass = name.constantize.new
-        return [klass.class, action] if klass.respond_to?(action)
+        return action if klass.respond_to?(action)
 
         hsh = Miau::PolicyStorage.instance.policies[kls]
         if hsh
           meth = hsh[action]
-          return [klass.class, meth] if meth
+          return meth if meth
         end
         hsh = Miau::PolicyStorage.instance.policies[:application]
         if hsh
           meth = hsh[action]
-          return [ApplicationPolicy, meth] if meth
+          return meth if meth
         end
       end
 
-      [nil, nil]
+      nil
     end
 
     def run(klass, action, user, resource)
       policy = Miau::PolicyStorage.instance.find_or_create(klass)
-      _kls, meth = find_policy(klass, action)
+      meth = find_policy(klass, action)
       unless meth
         msg = "class <#{klass}> action <#{action}>"
         raise Miau::NotDefinedError, msg

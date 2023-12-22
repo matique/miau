@@ -30,4 +30,12 @@ describe Miau, "performed authorization" do
   def test_authorization_not_performed
     refute posts_controller.miau_authorization_performed?
   end
+
+  def xtest_authorize_controller!
+    refute posts_controller.authorize_controller!
+  end
+
+  def test_authorize_controller?
+    assert posts_controller.authorize_controller?
+  end
 end
