@@ -14,8 +14,18 @@ module Miau
     if respond_to?(:helper_method)
       helper_method :authorized?
       helper_method :miau_user
+      helper_method :yyyy
     end
   end
+
+def yyyy
+ic :yyyyyyyyyyyyyyyyyyyy
+ic self
+ic miau_user
+ic params
+Miau::PolicyRun.instance.run(:dashboard, :controller, miau_user, nil)
+ic :a9999999999999999999999999999999999999999999999999
+end
 
   def authorize!(resource = nil, hsh = {})
     @_miau_authorization_performed = true
