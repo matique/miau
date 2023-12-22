@@ -23,12 +23,12 @@ module Miau
 
     klass, action = klass_action
     msg = "class <#{klass} action <#{action}>"
-    raise Miau::NotAuthorizedError, msg
+    raise NotAuthorizedError, msg
   end
 
   def authorized?(resource = nil, hsh = {})
     klass, action = klass_action
-    Miau::PolicyRun.instance.run(klass, action, miau_user, resource)
+    PolicyRun.instance.run(klass, action, miau_user, resource)
   end
 
   def miau_user

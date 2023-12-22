@@ -23,12 +23,12 @@ module Miau
         klass = name.constantize.new
         return action if klass.respond_to?(action)
 
-        hsh = Miau::PolicyStorage.instance.policies[kls]
+        hsh = PolicyStorage.instance.policies[kls]
         if hsh
           meth = hsh[action]
           return meth if meth
         end
-        hsh = Miau::PolicyStorage.instance.policies[:application]
+        hsh = PolicyStorage.instance.policies[:application]
         if hsh
           meth = hsh[action]
           return meth if meth
@@ -39,11 +39,11 @@ module Miau
     end
 
     def run(klass, action, user, resource)
-      policy = Miau::PolicyStorage.instance.find_or_create(klass)
+      policy = PolicyStorage.instance.find_or_create(klass)
       meth = find_policy(klass, action)
       unless meth
         msg = "class <#{klass}> action <#{action}>"
-        raise Miau::NotDefinedError, msg
+        raise NotDefinedError, msg
       end
 
       policy.user = user
