@@ -35,10 +35,6 @@ module Miau
     current_user
   end
 
-  def skip_authorization
-    @_miau_authorization_performed = true
-  end
-
   def verify_authorized
     raise AuthorizationNotPerformedError unless miau_authorization_performed?
   end
@@ -51,7 +47,7 @@ module Miau
     ic 8888888888888888, self
   end
 
-  def authorize_controller?
+  def authorized_controller?
     ic 99999999999, self
 true
 #false

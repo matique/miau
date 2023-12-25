@@ -11,4 +11,8 @@ class PostsPolicy < ApplicationPolicy
   def no
     false
   end
+
+  def controller
+    false
+  end
 end
