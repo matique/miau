@@ -44,13 +44,14 @@ module Miau
   end
 
   def authorize_controller!
-    ic 8888888888888888, self
-  end
-
-  def authorized_controller?
-    ic 99999999999, self
-true
-#false
+    klass = params[:controller].to_sym
+    name = "#{klass.to_s.camelcase}Policy"
+    if Object.const_defined?(name)
+      klass = name.constantize.new
+      flag = klass.respond_to?(:controller)
+      raise NotDefinedError unless flag
+    end
+    klass.send(:controller)
   end
 
   private
