@@ -38,8 +38,8 @@ describe Miau, "storage" do
     assert_match(/- :ok/, str)
   end
 
-  def test_find_or_create
-    storage.find_or_create "application"
+  def test_find_or_create_policy
+    storage.find_or_create_policy "application"
 
     assert ApplicationPolicy, storage.instances[:application]
   end

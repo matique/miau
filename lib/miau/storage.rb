@@ -45,7 +45,7 @@ module Miau
       end
     end
 
-    def find_or_create(klass)
+    def find_or_create_policy(klass)
       res = @instances[klass]
       return res unless res.nil?
 

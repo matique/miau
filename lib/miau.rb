@@ -33,20 +33,16 @@ end
 
     klass, action = klass_action
     msg = "class <#{klass} action <#{action}>"
-    raise Miau::NotAuthorizedError, msg
+    raise NotAuthorizedError, msg
   end
 
   def authorized?(resource = nil, hsh = {})
     klass, action = klass_action
-    Miau::PolicyRun.instance.run(klass, action, miau_user, resource)
+    PolicyRun.instance.run(klass, action, miau_user, resource)
   end
 
   def miau_user
     current_user
-  end
-
-  def skip_authorization
-    @_miau_authorization_performed = true
   end
 
   def verify_authorized
@@ -57,8 +53,12 @@ end
     !!@_miau_authorization_performed
   end
 
-  def check_authorization
-    ic 8888888888888888, self
+  def authorize_controller!
+    name = params[:controller].to_sym
+    policy = PolicyStorage.instance.find_or_create_policy(name)
+    raise NotDefinedError unless policy&.respond_to?(:controller)
+
+    policy.send(:controller)
   end
 
   private

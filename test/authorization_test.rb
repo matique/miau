@@ -17,11 +17,6 @@ describe Miau, "performed authorization" do
     }
   end
 
-  def test_skip_authorization
-    posts_controller.skip_authorization
-    posts_controller.verify_authorized
-  end
-
   def test_authorization_performed
     posts_controller.authorize!(post)
     assert posts_controller.miau_authorization_performed?
