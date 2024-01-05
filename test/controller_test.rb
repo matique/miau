@@ -26,7 +26,7 @@ describe Miau, "controller" do
   def test_authorize_controller_not_defined
     params = {controller: "not"}
     not_controller = NotController.new(user, params)
-    assert_raises (Miau::NotDefinedError) {
+    assert_raises(Miau::NotDefinedError) {
       not_controller.authorize_controller!
     }
   end
