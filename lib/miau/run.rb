@@ -17,28 +17,28 @@ module Miau
     #   - nil
     # returns [klass, method]
 
-    def find_policy(kls, action)
-      name = "#{kls.to_s.camelcase}Policy"
-      if Object.const_defined?(name)
-        klass = name.constantize.new
-        return action if klass.respond_to?(action)
+#    def find_policy(kls, action)
+#      name = "#{kls.to_s.camelcase}Policy"
+#      if Object.const_defined?(name)
+#        klass = name.constantize.new
+#        return action if klass.respond_to?(action)
+#
+#        hsh = PolicyStorage.instance.policies[kls]
+#        if hsh
+#          meth = hsh[action]
+#          return meth if meth
+#        end
+#        hsh = PolicyStorage.instance.policies[:application]
+#        if hsh
+#          meth = hsh[action]
+#          return meth if meth
+#        end
+#      end
+#
+#      nil
+#    end
 
-        hsh = PolicyStorage.instance.policies[kls]
-        if hsh
-          meth = hsh[action]
-          return meth if meth
-        end
-        hsh = PolicyStorage.instance.policies[:application]
-        if hsh
-          meth = hsh[action]
-          return meth if meth
-        end
-      end
-
-      nil
-    end
-
-    def x(policy, klass, action)
+    def find_policy(policy, klass, action)
 #ic policy, klass, action
       return action if policy.respond_to?(action)
 
@@ -50,13 +50,12 @@ module Miau
     end
 
     def run(klass, action, user, resource)
-ic :run, klass, action, user, resource
+#ic :run, klass, action, user, resource
       policy = PolicyStorage.instance.find_or_create_policy(klass)
-      meth = x policy, klass, action if policy
-      meth ||= x ApplicationPolicy, :application, action
-ic meth
+      meth = find_policy policy, klass, action if policy
+      meth ||= find_policy ApplicationPolicy, :application, action
+#ic meth
 
-#      meth = find_policy(klass, action)
       unless meth
         msg = "class <#{klass}> action <#{action}>"
         raise NotDefinedError, msg
