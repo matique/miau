@@ -44,14 +44,11 @@ module Miau
   end
 
   def authorize_controller!
-    klass = params[:controller].to_sym
-    name = "#{klass.to_s.camelcase}Policy"
-    if Object.const_defined?(name)
-      klass = name.constantize.new
-      flag = klass.respond_to?(:controller)
-      raise NotDefinedError unless flag
-    end
-    klass.send(:controller)
+    name = params[:controller].to_sym
+    policy = PolicyStorage.instance.find_or_create_policy(name)
+    raise NotDefinedError unless policy&.respond_to?(:controller)
+
+    policy.send(:controller)
   end
 
   private

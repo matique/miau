@@ -38,9 +38,25 @@ module Miau
       nil
     end
 
+    def x(policy, klass, action)
+#ic policy, klass, action
+      return action if policy.respond_to?(action)
+
+      hsh = PolicyStorage.instance.policies[klass]
+#ic hsh
+      return nil unless hsh
+
+      hsh[action]
+    end
+
     def run(klass, action, user, resource)
-      policy = PolicyStorage.instance.find_or_create(klass)
-      meth = find_policy(klass, action)
+ic :run, klass, action, user, resource
+      policy = PolicyStorage.instance.find_or_create_policy(klass)
+      meth = x policy, klass, action if policy
+      meth ||= x ApplicationPolicy, :application, action
+ic meth
+
+#      meth = find_policy(klass, action)
       unless meth
         msg = "class <#{klass}> action <#{action}>"
         raise NotDefinedError, msg
