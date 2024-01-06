@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    miau (1.0.3)
+    miau (1.1.0)
       activesupport
 
 GEM
