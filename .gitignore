@@ -1,10 +1,10 @@
-.bundle/
-tmp/
-coverage/
-.watchr
+/.bundle/
+/tmp/
+/coverage/
+/.watchr
 
 *.gem
-**/*.log
-**/*.lock
+*.log
+*.lock
 
 **/db/test.sqlite*
