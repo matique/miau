@@ -10,12 +10,9 @@ ENV["RAILS_ENV"] ||= "test"
 
 require "miau"
 
-require "active_support"
-require "active_support/core_ext"
+require "combustion"
+Combustion.path = "test/internal"
+Combustion.initialize! :active_record
 
 require "minitest/autorun"
-require "ricecream"
-
-support = File.expand_path("../test/support", __dir__)
-$LOAD_PATH.unshift support
-Dir["#{support}/**/*.rb"].each { |f| require f }
+require "rails/test_help"

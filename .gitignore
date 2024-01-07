@@ -1,7 +1,10 @@
-/.bundle/
-/Gemfile.lock
-/coverage/
+.bundle/
+tmp/
+coverage/
 .watchr
 
-/doc/
-/tmp/
+*.gem
+*.log
+*.lock
+
+**/db/test.sqlite*
