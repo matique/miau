@@ -1,12 +1,10 @@
-require "rubygems"
-require "bundler/gem_tasks"
 require "rake/testtask"
 
-desc "Run all tests"
+desc "Run the tests."
 Rake::TestTask.new do |t|
-  t.libs.push "test"
-  t.pattern = "test/*_test.rb"
+  t.libs << "test"
+  t.pattern = "test/**/*_test.rb"
+  t.verbose = false
 end
 
-desc "Default: run unit tests."
 task default: :test
