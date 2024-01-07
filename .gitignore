@@ -4,7 +4,7 @@ coverage/
 .watchr
 
 *.gem
-*/**/.log
-*/**/.lock
+**/*.log
+**/*.lock
 
-*/**/db/test.sqlite*
+**/db/test.sqlite*
