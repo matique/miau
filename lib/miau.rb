@@ -46,14 +46,10 @@ module Miau
   def authorize_controller!
     klass, action = klass_action
     policy = PolicyStorage.instance.find_or_create_policy(klass)
-    raise NotDefinedError unless policy&.respond_to?(:controller)
-
     policy.action = action
-    return true if policy.send(:controller)
+    return true if PolicyRun.instance.runs(policy, :controller)
 
-    klass, action = klass_action
-    msg = "class <#{klass}> action <#{action}>"
-    raise NotAuthorizedError, msg
+    PolicyRun.instance.raise_authorize policy, action
   end
 
   private

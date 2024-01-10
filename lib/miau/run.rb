@@ -44,14 +44,23 @@ module Miau
       true
     end
 
-    def run_controller(policy, action)
-       raise NotDefinedError unless policy&.respond_to?(:controller)
+    def runs(policy, actions)
+      [actions].flatten.each { |action|
+        raise_undef(policy, action) unless policy&.respond_to?(action)
 
-      policy.send(:controller)
+        return false unless policy.send(action)
+      }
+      true
+    end
 
-#      klass, action = klass_action
-#      msg = "class <#{klass}> action <#{action}>"
-#      raise NotAuthorizedError, msg
+    def raise_undef(policy, action)
+      msg = "NotDefined policy <#{policy}> action <#{action}>"
+      raise NotDefinedError, msg
+    end
+
+    def raise_authorize(policy, action)
+      msg = "NotAuthorized policy <#{policy}> action <#{action}>"
+      raise NotAuthorizedError, msg
     end
   end
 end
