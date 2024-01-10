@@ -21,14 +21,35 @@ module Miau
     @_miau_authorization_performed = true
     return true if authorized?(resource, hsh)
 
-    klass, action = klass_action
-    msg = "class <#{klass}> action <#{action}>"
-    raise NotAuthorizedError, msg
+    controller = params[:controller].to_sym
+    action = params[:action].to_sym
+    PolicyRun.instance.raise_authorize(controller, action)
   end
 
   def authorized?(resource = nil, hsh = {})
-    klass, action = klass_action
-    PolicyRun.instance.run(klass, action, miau_user, resource)
+    controller = params[:controller].to_sym
+    action = params[:action].to_sym
+    policy = PolicyStorage.instance.find_or_create_policy(controller)
+    PolicyRun.instance.raise_undef(policy, action) unless policy
+
+    policy.user = miau_user
+    policy.resource = resource
+    methods = PolicyRun.instance.find_methods(policy, controller, action)
+    PolicyRun.instance.raise_undef(policy, action) unless methods
+
+    PolicyRun.instance.runs(policy, methods)
+  end
+
+  def authorize_controller!
+    controller = params[:controller].to_sym
+    action = params[:action].to_sym
+    policy = PolicyStorage.instance.find_or_create_policy(controller)
+    policy.action = action
+
+    @_miau_authorization_performed = true
+    return true if PolicyRun.instance.runs(policy, :controller)
+
+    PolicyRun.instance.raise_authorize policy, action
   end
 
   def miau_user
@@ -41,15 +62,6 @@ module Miau
 
   def miau_authorization_performed?
     !!@_miau_authorization_performed
-  end
-
-  def authorize_controller!
-    klass, action = klass_action
-    policy = PolicyStorage.instance.find_or_create_policy(klass)
-    policy.action = action
-    return true if PolicyRun.instance.runs(policy, :controller)
-
-    PolicyRun.instance.raise_authorize policy, action
   end
 
   private
