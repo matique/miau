@@ -5,7 +5,7 @@ class PostsPolicy < ApplicationPolicy
   miau %i[sino], %i[si no]
 
   def controller
-    false
+    true
   end
 
   def si

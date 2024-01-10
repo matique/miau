@@ -18,13 +18,13 @@ describe Miau, "controller" do
   let(:user) { "User" }
 
   def test_authorize_controller!
-    params = {controller: "posts"}
+    params = {controller: "posts", action: :any}
     posts_controller = PostsController.new(user, params)
-    refute posts_controller.authorize_controller!
+    posts_controller.authorize_controller!
   end
 
   def test_authorize_controller_not_defined
-    params = {controller: "not"}
+    params = {controller: "not", action: :any}
     not_controller = NotController.new(user, params)
     assert_raises(Miau::NotDefinedError) {
       not_controller.authorize_controller!

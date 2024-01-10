@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_accessor :user, :resource
+  attr_accessor :user, :resource, :action
 
   def self.miau(actions, meth = nil, &block)
     kls = name.underscore[0..-8] # remove "_policy"
