@@ -43,5 +43,15 @@ module Miau
       }
       true
     end
+
+    def run_controller(policy, action)
+       raise NotDefinedError unless policy&.respond_to?(:controller)
+
+      policy.send(:controller)
+
+#      klass, action = klass_action
+#      msg = "class <#{klass}> action <#{action}>"
+#      raise NotAuthorizedError, msg
+    end
   end
 end
