@@ -22,7 +22,7 @@ module Miau
     return true if authorized?(resource, hsh)
 
     klass, action = klass_action
-    msg = "class <#{klass} action <#{action}>"
+    msg = "class <#{klass}> action <#{action}>"
     raise NotAuthorizedError, msg
   end
 
@@ -44,11 +44,16 @@ module Miau
   end
 
   def authorize_controller!
-    name = params[:controller].to_sym
-    policy = PolicyStorage.instance.find_or_create_policy(name)
+    klass, action = klass_action
+    policy = PolicyStorage.instance.find_or_create_policy(klass)
     raise NotDefinedError unless policy&.respond_to?(:controller)
 
-    policy.send(:controller)
+    policy.action = action
+    return true if policy.send(:controller)
+
+    klass, action = klass_action
+    msg = "class <#{klass}> action <#{action}>"
+    raise NotAuthorizedError, msg
   end
 
   private

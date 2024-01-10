@@ -125,6 +125,26 @@ Rescue's may be inserted previously in the exception chain.
 
 "verify_authorized" checks that an "authorize!" has been called.
 
+## Authorize Controller
+
+Sometimes a whole controller can be authorized,
+e.g. all actions requires admin priviledges.
+
+The corresponding authorization is triggered by
+a "before_action :authorize_controller!".
+The corresponding policy is
+defined by (e.g):
+
+```ruby
+class PostsPolicy < ApplicationPolicy
+...
+  def controller
+    user.is_admin?
+  end
+...
+end
+```
+
 ## DRYing
 
 ```ruby
@@ -156,5 +176,5 @@ Just the embedding in Rails required some specific knowledge.
 
 ## Miscellaneous
 
-Copyright (c) 2021-2023 Dittmar Krall (www.matiq.com),
+Copyright (c) 2021-2024 Dittmar Krall (www.matiq.com),
 released under the [MIT license](https://opensource.org/licenses/MIT).
