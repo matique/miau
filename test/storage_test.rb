@@ -44,6 +44,13 @@ describe Miau, "storage" do
     assert ApplicationPolicy, storage.instances[:application]
   end
 
+  def test_overwrite
+    storage.add_policy "my", "first", "ok"
+    assert_raises(Miau::OverwriteError) {
+      storage.add_policy "my", "first", "ok"
+    }
+  end
+
   def test_coverage_to_yaml
     str = storage.to_yaml
 

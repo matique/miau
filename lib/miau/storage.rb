@@ -38,7 +38,6 @@ module Miau
       end
 
       if meth.is_a?(Array)
-        # meths = [meth].flatten.collect { |m| m.to_sym }
         meths = [meth].flatten.collect(&:to_sym)
         @policies[kls][action] = meths
       else

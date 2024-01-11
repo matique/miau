@@ -7,7 +7,7 @@ module Miau
   class PolicyRun
     include Singleton
 
-    # return instance of policy (may be nil) and the method
+    # return method[s]
     # klass and action are symbols
     # Priority:
     #   - method of <klass>Policy
@@ -17,7 +17,7 @@ module Miau
     #   - nil
     # returns method_name[s]
 
-    def find_policy(policy, klass, action)
+    def find_methods(policy, klass, action)
       return action if policy.respond_to?(action)
 
       hsh = PolicyStorage.instance.policies[klass]
@@ -26,22 +26,23 @@ module Miau
       hsh[action]
     end
 
-    def run(klass, action, user, resource)
-      policy = PolicyStorage.instance.find_or_create_policy(klass)
-      meth = find_policy policy, klass, action if policy
-      meth ||= find_policy ApplicationPolicy, :application, action
+    def runs(policy, actions)
+      [actions].flatten.each { |action|
+        raise_undef(policy, action) unless policy&.respond_to?(action)
 
-      unless meth
-        msg = "class <#{klass}> action <#{action}>"
-        raise NotDefinedError, msg
-      end
-
-      policy.user = user
-      policy.resource = resource
-      [meth].flatten.each { |m|
-        return false unless policy.send(m)
+        return false unless policy.send(action)
       }
       true
+    end
+
+    def raise_undef(policy, action)
+      msg = "NotDefined policy <#{policy}> action <#{action}>"
+      raise NotDefinedError, msg
+    end
+
+    def raise_authorize(controller, action)
+      msg = "NotAuthorized controller <#{controller}> action <#{action}>"
+      raise NotAuthorizedError, msg
     end
   end
 end
