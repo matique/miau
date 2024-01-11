@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authorize_controller!
   before_action :set_order, only: %i[show edit update destroy]
 
   def self.class_method
@@ -45,6 +46,7 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1
   def destroy
+    authorize!
     @order.destroy!
     redirect_to orders_url, notice: "Order was successfully destroyed.", status: :see_other
   end

@@ -63,10 +63,4 @@ module Miau
   def miau_authorization_performed?
     !!@_miau_authorization_performed
   end
-
-  private
-
-  def klass_action
-    [params[:controller].to_sym, params[:action].to_sym]
-  end
 end
