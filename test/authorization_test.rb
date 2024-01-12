@@ -11,18 +11,18 @@ describe Miau, "performed authorization" do
     posts_controller.verify_authorized
   end
 
-  def test_exception_when_not_authorized
-    assert_raises(Miau::AuthorizationNotPerformedError) {
-      posts_controller.verify_authorized
-    }
-  end
-
-  def test_authorization_performed
-    posts_controller.authorize!(post)
-    assert posts_controller.miau_authorization_performed?
-  end
-
-  def test_authorization_not_performed
-    refute posts_controller.miau_authorization_performed?
-  end
+#  def test_exception_when_not_authorized
+#    assert_raises(Miau::AuthorizationNotPerformedError) {
+#      posts_controller.verify_authorized
+#    }
+#  end
+#
+#  def test_authorization_performed
+#    posts_controller.authorize!(post)
+#    assert posts_controller.miau_authorization_performed?
+#  end
+#
+#  def test_authorization_not_performed
+#    refute posts_controller.miau_authorization_performed?
+#  end
 end

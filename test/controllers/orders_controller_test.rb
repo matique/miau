@@ -1,63 +1,47 @@
 require "test_helper"
 
-#class OrdersPolicy < ApplicationPolicy
-#  def controller
-#    false
-#  end
-#
-#  def new
-#    false
-#  end
-#
-#  def destroy
-#    false
-#  end
-#end
-
 class OrdersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @order = Order.create!(name: "Name", qty: 123)
   end
 
-#  test "should get index" do
-#    get orders_url
-#    assert_response :success
-#  end
-
   test "should get new" do
-    get new_order_url
+    out, err = capture_io do
+      get new_order_url
+    end
+
     assert_response :success
-ic response.body
+    assert_equal "controller\nnew\n", out
   end
 
   test "should create order" do
-    assert_difference("Order.count") do
-      post orders_url, params: {order: {name: @order.name, qty: 234}}
+    out, err = capture_io do
+      assert_difference("Order.count") do
+        post orders_url, params: {order: {name: @order.name, qty: 234}}
+      end
     end
 
     assert_redirected_to order_url(Order.last)
+    assert_equal "controller\n", out
   end
 
-#  test "should show order" do
-#    get order_url(@order)
-#    assert_response :success
-#  end
-
-#  test "should get edit" do
-#    get edit_order_url(@order)
-#    assert_response :success
-#  end
-
   test "should update order" do
-    patch order_url(@order), params: {order: {name: @order.name}}
+    out, err = capture_io do
+      patch order_url(@order), params: {order: {name: @order.name}}
+    end
+
     assert_redirected_to order_url(@order)
+    assert_equal "controller\n", out
   end
 
   test "should destroy order" do
-    assert_difference("Order.count", -1) do
-      delete order_url(@order)
+    out, err = capture_io do
+      assert_difference("Order.count", -1) do
+        delete order_url(@order)
+      end
     end
 
     assert_redirected_to orders_url
+    assert_equal "controller\ndestroy\n", out
   end
 end

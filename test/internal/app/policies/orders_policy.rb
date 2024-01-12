@@ -1,16 +1,16 @@
 class OrdersPolicy < ApplicationPolicy
   def controller
-#p 1111111111111111111
+    puts :controller
     true
   end
 
-  def xnew
-#p 55555555555555
+  def new
+    puts :new
     true
   end
 
   def destroy
-#p 2222222222222
+    puts :destroy
     true
   end
 end

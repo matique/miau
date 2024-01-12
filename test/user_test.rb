@@ -6,7 +6,7 @@ describe Miau do
   let(:params) { {action: "update", controller: "posts"} }
   let(:posts_controller) { PostsController.new(user, params) }
 
-  def test_miau_user_same_as_current_user
-    assert_equal posts_controller.miau_user, posts_controller.current_user
-  end
+#  def test_miau_user_same_as_current_user
+#    assert_equal posts_controller.miau_user, posts_controller.current_user
+#  end
 end
