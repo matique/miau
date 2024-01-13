@@ -44,13 +44,12 @@ end
 ```ruby
 # app/policies/application_policy.rb             # app/policies/posts_policy.rb
   class ApplicationPolicy                          class PostsPolicy < ApplicationPolicy
-    attr_reader :user, :resource                     ...
+    attr_reader :user, :resource, :action                     ...
                                                      def update
-    def initalize(user, resource)                      user.admin? && resource.published?
-      @user = user                                   end
-      @resource = resource                           ...
-    end                                            end
-  end
+    ...                                                user.admin? && resource.published?
+  end                                                end
+                                                     ...
+                                                   end
 ```
 
 "authorize!" will raise an exception (which can be handled by "rescue")
@@ -66,6 +65,8 @@ At the bottom line based on a "policy" and an "action"
 a corresponding policy method is called.
 
 The policy method has access to the "user" and the "resource".
+
+The "controller" policy method has access to the "user" and the "action".
 
 "user" is set by the default method "miau_user" (can be overwritten) as:
 

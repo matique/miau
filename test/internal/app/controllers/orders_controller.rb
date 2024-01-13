@@ -1,27 +1,24 @@
 class OrdersController < ApplicationController
+  before_action :authorize_controller!
   before_action :set_order, only: %i[show edit update destroy]
 
-  def self.class_method
-    "just for testing purposes"
-  end
-
-  # GET /orders
-  def index
-    @orders = Order.all
-  end
-
-  # GET /orders/1
-  def show
-  end
+  # # GET /orders
+  # def index
+  #   @orders = Order.all
+  # end
+  #
+  # # GET /orders/1
+  # def show
+  # end
 
   # GET /orders/new
   def new
     @order = Order.new
   end
 
-  # GET /orders/1/edit
-  def edit
-  end
+  # # GET /orders/1/edit
+  # def edit
+  # end
 
   # POST /orders
   def create
@@ -45,6 +42,7 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1
   def destroy
+    authorize!
     @order.destroy!
     redirect_to orders_url, notice: "Order was successfully destroyed.", status: :see_other
   end

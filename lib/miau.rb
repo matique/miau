@@ -44,6 +44,7 @@ module Miau
     controller = params[:controller].to_sym
     action = params[:action].to_sym
     policy = PolicyStorage.instance.find_or_create_policy(controller)
+    policy.user = miau_user
     policy.action = action
 
     @_miau_authorization_performed = true
@@ -62,11 +63,5 @@ module Miau
 
   def miau_authorization_performed?
     !!@_miau_authorization_performed
-  end
-
-  private
-
-  def klass_action
-    [params[:controller].to_sym, params[:action].to_sym]
   end
 end
