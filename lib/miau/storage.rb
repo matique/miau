@@ -18,7 +18,7 @@ module Miau
     #   }
     # }
     attr_reader :policies
-    attr_reader :instances # { posts: PostsPolicy.new }
+    attr_reader :instances # e.g. { posts: PostsPolicy.new }
 
     def initialize
       reset

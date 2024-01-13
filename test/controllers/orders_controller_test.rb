@@ -6,7 +6,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_new
-    out, err = capture_io do
+    out, _err = capture_io do
       get new_order_url
     end
 
@@ -15,7 +15,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_create
-    out, err = capture_io do
+    out, _err = capture_io do
       assert_difference("Order.count") do
         post orders_url, params: {order: {name: @order.name, qty: 234}}
       end
@@ -26,7 +26,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_update
-    out, err = capture_io do
+    out, _err = capture_io do
       patch order_url(@order), params: {order: {name: @order.name}}
     end
 
@@ -35,7 +35,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_destroy
-    out, err = capture_io do
+    out, _err = capture_io do
       assert_difference("Order.count", -1) do
         delete order_url(@order)
       end
