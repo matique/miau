@@ -5,7 +5,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     @order = Order.create!(name: "Name", qty: 123)
   end
 
-  test "should get new" do
+  def test_new
     out, err = capture_io do
       get new_order_url
     end
@@ -14,7 +14,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "controller\nnew\n", out
   end
 
-  test "should create order" do
+  def test_create
     out, err = capture_io do
       assert_difference("Order.count") do
         post orders_url, params: {order: {name: @order.name, qty: 234}}
@@ -25,7 +25,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "controller\n", out
   end
 
-  test "should update order" do
+  def test_update
     out, err = capture_io do
       patch order_url(@order), params: {order: {name: @order.name}}
     end
@@ -34,7 +34,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "controller\n", out
   end
 
-  test "should destroy order" do
+  def test_destroy
     out, err = capture_io do
       assert_difference("Order.count", -1) do
         delete order_url(@order)
