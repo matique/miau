@@ -36,12 +36,12 @@ module Miau
     end
 
     def raise_undef(policy, action)
-      msg = "NotDefined policy <#{policy}> action <#{action}>"
+      msg = "policy <#{policy}> action <#{action}>"
       raise NotDefinedError, msg
     end
 
     def raise_authorize(controller, action)
-      msg = "NotAuthorized controller <#{controller}> action <#{action}>"
+      msg = "controller <#{controller}> action <#{action}>"
       raise NotAuthorizedError, msg
     end
   end
