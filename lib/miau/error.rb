@@ -3,15 +3,8 @@
 module Miau
   class Error < StandardError; end
 
-  class NotAuthorizedError < Error
-  end
-
-  class NotDefinedError < Error
-  end
-
-  class AuthorizationNotPerformedError < Error
-  end
-
-  class OverwriteError < Error
-  end
+  class NotAuthorizedError < Error; end
+  class NotDefinedError < Error; end
+  class AuthorizationNotPerformedError < Error; end
+  class OverwriteError < Error; end
 end

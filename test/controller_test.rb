@@ -34,6 +34,14 @@ end
 describe Miau, "controller" do
   let(:user) { "User" }
 
+  def test_unknown_policy
+    params = {controller: "unknown", action: :any}
+    posts_controller = PostsController.new(user, params)
+    assert_raises(Miau::NotDefinedError) {
+      posts_controller.authorize_controller!
+    }
+  end
+
   def test_authorize_controller!
     params = {controller: "posts", action: :any}
     posts_controller = PostsController.new(user, params)

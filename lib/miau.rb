@@ -44,6 +44,11 @@ module Miau
     controller = params[:controller].to_sym
     action = params[:action].to_sym
     policy = PolicyStorage.instance.find_or_create_policy(controller)
+    unless policy
+      msg = "missing class #{controller.capitalize}Policy"
+      raise NotDefinedError, msg
+    end
+
     policy.user = miau_user
     policy.action = action
 
