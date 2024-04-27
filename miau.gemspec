@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
 
   s.require_paths = ["lib"]
 
+  s.add_dependency "listen"
   s.add_development_dependency "appraisal"
   s.add_development_dependency "combustion"
   s.add_development_dependency "minitest"

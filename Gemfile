@@ -5,7 +5,6 @@ gem "rails"
 
 group :test do
   gem "benchmark-ips"
-  gem "observr"
   gem "cuco"
   gem "ricecream"
   gem "simplecov", require: false
