@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    miau (1.1.7)
+    miau (1.1.8)
       listen
 
 GEM

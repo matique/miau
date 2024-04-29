@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Miau
-  VERSION = "1.1.7" # 2024-04-24
+  VERSION = "1.1.8" # 2024-04-29
+  # VERSION = "1.1.7" # 2024-04-24
   # VERSION = "1.1.6" # 2024-01-13
   # VERSION = "1.1.1" # 2024-01-06
   # VERSION = "1.1.0" # 2024-01-06
