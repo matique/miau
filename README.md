@@ -1,6 +1,6 @@
 # Miau
 
-[![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/miau)
+[![Gem Version](https://badge.fury.io/rb/miau.svg)](http://badge.fury.io/rb/miau)
 [![GEM Downloads](https://img.shields.io/gem/dt/miau?color=168AFE&logo=ruby&logoColor=FE1616)](https://rubygems.org/gems/miau)
 [![rake](https://github.com/matique/miau/actions/workflows/rake.yml/badge.svg)](https://github.com/matique/miau/actions/workflows/rake.yml)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/standardrb/standard)
