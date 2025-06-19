@@ -6,7 +6,7 @@ gem "rails"
 group :test do
   gem "benchmark-ips"
   gem "cuco"
-  gem "ricecream"
+  gem "ricecream", require: false
   gem "simplecov", require: false
   gem "sqlite3"
   gem "standard", require: false
