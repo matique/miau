@@ -4,6 +4,7 @@ gemspec
 gem "rails"
 
 group :test do
+  gem "benchmark"
   gem "benchmark-ips"
   gem "cuco"
   gem "ricecream", require: false
