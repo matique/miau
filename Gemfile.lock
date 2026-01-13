@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    miau (1.1.16)
+    miau (1.2.0)
       listen
 
 GEM
@@ -365,7 +365,7 @@ CHECKSUMS
   loofah (2.25.0) sha256=df5ed7ac3bac6a4ec802df3877ee5cc86d027299f8952e6243b3dac446b060e6
   mail (2.9.0) sha256=6fa6673ecd71c60c2d996260f9ee3dd387d4673b8169b502134659ece6d34941
   marcel (1.1.0) sha256=fdcfcfa33cc52e93c4308d40e4090a5d4ea279e160a7f6af988260fa970e0bee
-  miau (1.1.16)
+  miau (1.2.0)
   micro-optparse (1.2.1) sha256=b9cc0e2b4987776ca78dcbf59ce72c2bf6fd805fe56a0f4a94f9a2b0c68044e4
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.1) sha256=7854c74f48e2e975969062833adc4013f249a4b212f5e7b9d5c040bf838d54bb
