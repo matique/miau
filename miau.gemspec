@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 3"
 
   s.add_dependency "listen"
-  s.add_development_dependency "appraisal"
   s.add_development_dependency "combustion"
   s.add_development_dependency "minitest"
   s.add_development_dependency "ricecream"
